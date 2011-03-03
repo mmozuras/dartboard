@@ -9,7 +9,11 @@ app.get('/404', function(req, res) {
 });
 
 app.get('/', function(req, res){
-    res.render('index.jade', {});
+    res.render('index.jade');
+});
+
+app.get('/players', function(req, res){
+    res.render('players/index.jade')
 });
 
 if (!module.parent) {
