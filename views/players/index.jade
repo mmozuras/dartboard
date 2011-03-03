@@ -1,3 +1,4 @@
 ul
-  li John Doe
-  li Mr. T
+  - for (var player in players)
+    li 
+      =players[player].name
