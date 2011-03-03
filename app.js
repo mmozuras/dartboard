@@ -2,6 +2,8 @@ var express = require('express@1.0.7'),
     jade = require('jade@0.6.3')
     app = module.exports = express.createServer();
 
+app.use(express.logger());
+
 app.get('/404', function(req, res) {
     throw new NotFound;
 });
