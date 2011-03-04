@@ -2,3 +2,7 @@ ul
   - for (var player in players)
     li 
       =players[player].name
+  form(method='post', action='/players')
+    !=partial('players/edit', { locals: {player: player } })
+    div
+      input(type='submit', value='Add')
