@@ -1,17 +1,23 @@
-var express = require('express@1.0.7'),    
+require("./underscore");
+
+var path = require('path'),
+    application_root = __dirname,
+    Server = { paths : { models : path.join(application_root, 'models') } },
+    express = require('express@1.0.7'),
     jade = require('jade@0.6.3'),
     mongoose = require('mongoose@1.1.2'),
-    models = require('./models'),
     db,
     Player,
     app = module.exports = express.createServer();
+
+global.Server = Server;
 
 app.configure(function() {
   app.set('views', __dirname + '/views');
   app.use(express.favicon());
   app.use(express.bodyDecoder());
   app.use(express.cookieDecoder());
-  app.use(express.session({ secret: 'supersecret'}));
+  app.use(express.session({ secret: 'supersecret' }));
   app.use(express.logger({ format: '\x1b[1m:method\x1b[0m \x1b[33m:url\x1b[0m \x1b[1m:status\x1b[0m :response-time ms' }))
   app.use(express.methodOverride());
   app.use(express.staticProvider(__dirname + '/public'));
@@ -25,10 +31,10 @@ app.configure('development', function() {
   app.use(express.errorHandler({ dumpExceptions: true }));
 });
 
-models.defineModels(mongoose, function(){
-    app.Player = Player = mongoose.model('Player');
-    db = mongoose.connect(app.set('db-uri'));
-});
+db = mongoose.connect(app.set('db-uri'));
+
+require('./models.js').autoload(db);
+app.Player = Player = mongoose.model('Player');
 
 app.get('/404', function(req, res) {
     throw new NotFound;

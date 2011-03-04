@@ -1,14 +1,15 @@
-function defineModels(mongoose, fn) {
-  var Schema = mongoose.Schema,
-      ObjectId = Schema.ObjectId;
+module.exports = Server.models = {};
 
-  Player = new Schema({
-      'name': String
+Server.models.autoload = function(db){
+  var fs = require("fs"),
+      path = require("path"),
+      mongoose = require("mongoose"),
+      files = fs.readdirSync( Server.paths.models ),
+      names = _.map(files,function(f){
+        return( path.basename(f) );
+      });
+
+  _.each(names,function(model){
+    require( Server.paths.models + "/" + model );
   });
-
-  mongoose.model('Player', Player);
-
-  fn();
-}
-
-exports.defineModels = defineModels;
+};
