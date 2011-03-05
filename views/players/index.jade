@@ -1,6 +1,6 @@
 ul
   - for (var player in players)
-    li 
+    li(class='ui-state-default') 
       =players[player].name
   form(method='post', action='/players')
     !=partial('players/edit', { locals: { player: player } })

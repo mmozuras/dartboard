@@ -11,5 +11,5 @@ Server.models.autoload = function(db){
 
   _.each(names,function(model){
     require( Server.paths.models + "/" + model );
-  });
+  });  
 };
