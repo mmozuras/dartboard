@@ -2,26 +2,22 @@
 html
   head
     title= 'DartBoard'
-    link(rel='stylesheet', href='/css/redmond/jquery-ui-1.8.10.custom.css')
     link(rel='stylesheet', href='/css/site.css')
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js')
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js')
   body
     #container
       #top
-        #inner
-          h1 Dartboard
+        h1 Dartboard
       #contentwrapper
         #content
-          #inner
-            !{flashMessages}
-            != body
+          !{flashMessages}
+          != body
       #left
-        #inner
-          ul
-            li
-              a(href='/players') Players
-            li
-              a(href='/games/new') New Game
+        ul
+          li
+            a(href='/players') Players
+          li
+            a(href='/games/new') New Game
       #footer 
         a(href='https://github.com/mmozuras') github/mmozuras
