@@ -11,23 +11,28 @@ app.get('/players', function(req, res){
 
 app.post('/players', function(req, res){
     var player = new Player(req.body.player);
-
-    player.save(function(err) {
-      if (err) return failed('creation', req, res);
+    
+    Player.findOne({name: player.name}, function(err, existing){
+        if (existing == null) {
+          player.save(function(err) {
+            if (err) return failed('creation', req, res);
       
-      req.flash('info', 'Player was succesfully created');
-      res.redirect('/players');
-    });
+            req.flash('info', 'Player was succesfully created');
+            res.redirect('/players');
+          });
+        }
+        else return failed('creation', req, res);
+      });
 });
 
 app.del('/players/:id', function(req, res){
-    Player.findOne({_id: req.params.id}, function (err, player){
+    Player.findById(req.params.id, function (err, player){
       if (err) return failed('deletion', req, res);
+      
       player.remove();
+      req.flash('info', 'Player was succesfully deleted');
+      res.redirect('/players');
     });
-
-    req.flash('info', 'Player was succesfully deleted');
-    res.redirect('/players');
 });
 
 function failed(action, req, res){
