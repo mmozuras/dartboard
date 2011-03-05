@@ -5,13 +5,9 @@ var path = require('path'),
     express = require('express@1.0.7'),
     jade = require('jade@0.6.3'),
     mongoose = require('mongoose@1.1.2'),
-    db,
-    app = module.exports = express.createServer();
-
-global.app = app;
+    app = global.app = module.exports = express.createServer();
 
 app.configure(function() {
-  app.set('views', __dirname + '/views');
   app.use(express.favicon());
   app.use(express.bodyDecoder());
   app.use(express.cookieDecoder());
@@ -29,15 +25,9 @@ app.configure('development', function() {
   app.use(express.errorHandler({ dumpExceptions: true }));
 });
 
-db = mongoose.connect(app.set('db-uri'));
-
+var db = mongoose.connect(app.set('db-uri'));
 autoload(db, path.join(__dirname, 'models'));
 autoload(db, path.join(__dirname, 'controllers'));
-
-if (!module.parent) {
-  app.listen(3000);
-  console.log('Express server listening on port %d, environment: %s', app.address().port, app.settings.env);
-}
 
 function autoload(db, folder){
   var files = fs.readdirSync(folder).filter(function(file){ return path.extname(file) == '.js' } ),
@@ -45,4 +35,9 @@ function autoload(db, folder){
         return( path.basename(f) );
       });
   _.each(names,function(controller){ require( folder + '/' + controller )});
+}
+
+if (!module.parent) {
+  app.listen(3000);
+  console.log('Express server listening on port %d, environment: %s', app.address().port, app.settings.env);
 }

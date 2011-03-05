@@ -1,12 +1,3 @@
-exports.helpers = {
-  appName: 'Nodepad',
-  version: '0.1',
-
-  nameAndVersion: function(name, version) {
-    return name + ' v' + version;
-  }
-};
-
 function FlashMessage(type, messages) {
   this.type = type;
   this.messages = typeof messages === 'string' ? [messages] : messages;
