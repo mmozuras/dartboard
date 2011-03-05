@@ -12,22 +12,25 @@ app.get('/players', function(req, res){
 app.post('/players', function(req, res){
     var player = new Player(req.body.player);
 
-    function playerSaveFailed() {      
-      req.flash('error', 'Player creation failed');
-      res.redirect('/players');
-    }
-
     player.save(function(err) {
-      if (err) return playerSaveFailed();
-
-      switch (req.params.format) {
-        case 'json':
-          res.send(player.toObject());
-        break;
-
-        default:
-          req.flash('info', 'Player was succesfully created');
-          res.redirect('/players');
-      }
+      if (err) return failed('creation', req, res);
+      
+      req.flash('info', 'Player was succesfully created');
+      res.redirect('/players');
     });
 });
+
+app.del('/players/:id', function(req, res){
+    Player.findOne({_id: req.params.id}, function (err, player){
+      if (err) return failed('deletion', req, res);
+      player.remove();
+    });
+
+    req.flash('info', 'Player was succesfully deleted');
+    res.redirect('/players');
+});
+
+function failed(action, req, res){
+  req.flash('error', 'Player ' + action + ' failed');
+  res.redirect('/players');
+}
