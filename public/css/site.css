@@ -878,3 +878,12 @@ em {
   color: #0073ea;
   text-decoration: none;
 }
+.flash span {
+  margin-right: 0.7em;
+  float: left;
+}
+.flash .ui-corner-all {
+  padding: 0 5px;
+  opacity: 0.9;
+  font-weight: bold;
+}

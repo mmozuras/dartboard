@@ -1,8 +1,9 @@
 ul
   - for (var player in players)
-    li.ui-state-default
+    li
       form(method='post', action='/players/' + players[player].id)
-        =players[player].name
+        span.ui-state-default
+          =players[player].name
         input(type='hidden', name='_method', value='delete')
         button(type='submit')
           span(class='ui-icon ui-icon-closethick')

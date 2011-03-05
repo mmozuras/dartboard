@@ -19,7 +19,6 @@ app.configure(function() {
   app.use(express.staticProvider(__dirname + '/public'));
 });
 
-app.helpers(require('./helpers.js').helpers);
 app.dynamicHelpers(require('./helpers.js').dynamicHelpers);
 
 app.configure('development', function() {
