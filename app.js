@@ -2,15 +2,15 @@ require("./underscore");
 
 var path = require('path'),
     application_root = __dirname,
-    Server = { paths : { models : path.join(application_root, 'models') } },
+    Server = { paths : { models : path.join(application_root, 'models'), controllers : path.join(application_root, 'controllers') } },
     express = require('express@1.0.7'),
     jade = require('jade@0.6.3'),
     mongoose = require('mongoose@1.1.2'),
     db,
-    Player,
     app = module.exports = express.createServer();
 
 global.Server = Server;
+global.app = app;
 
 app.configure(function() {
   app.set('views', __dirname + '/views');
@@ -33,49 +33,21 @@ app.configure('development', function() {
 
 db = mongoose.connect(app.set('db-uri'));
 
-require('./models.js').autoload(db);
-app.Player = Player = mongoose.model('Player');
+autoload(db, Server.paths.models);
+autoload(db, Server.paths.controllers);
 
-app.get('/404', function(req, res) {
-    throw new NotFound;
-});
-
-app.get('/', function(req, res){
-    res.render('index.jade');
-});
-
-app.get('/players', function(req, res){
-    Player.find({}, function(err, players){
-        res.render('players/index.jade', {
-          locals: {players: players}
-        });
-    });
-});
-
-app.post('/players', function(req, res){
-    var player = new Player(req.body.player);
-
-    function playerSaveFailed() {      
-      req.flash('error', 'Player creation failed');
-      res.redirect('/players');
-    }
-
-    player.save(function(err) {
-      if (err) return playerSaveFailed();
-
-      switch (req.params.format) {
-        case 'json':
-          res.send(player.toObject());
-        break;
-
-        default:
-          req.flash('info', 'Player was succesfully created');
-          res.redirect('/players');
-      }
-    });
-});
+module.exports = Server.controllers = {};
 
 if (!module.parent) {
   app.listen(3000);
   console.log('Express server listening on port %d, environment: %s', app.address().port, app.settings.env);
+}
+
+function autoload(db, folder){
+  var fs = require("fs"),
+      files = fs.readdirSync(folder).filter(function(file){ return path.extname(file) == ".js" } ),
+      names = _.map(files,function(f){
+        return( path.basename(f) );
+      });
+  _.each(names,function(controller){ require( folder + "/" + controller )});
 }
