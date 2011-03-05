@@ -8,6 +8,20 @@ html
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js')
   body
     #container
-      #header
-      !{flashMessages}
-      #body!= body
+      #top
+        #inner
+          h1 Dartboard
+      #contentwrapper
+        #content
+          #inner
+            !{flashMessages}
+            != body
+      #left
+        #inner
+          ul
+            li
+              a(href='/players') Players
+            li
+              a(href='/games/new') New Game
+      #footer 
+        a(href='https://github.com/mmozuras') github/mmozuras
