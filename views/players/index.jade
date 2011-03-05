@@ -1,10 +1,11 @@
 ul
   - for (var player in players)
-    li(class='ui-state-default') 
-      =players[player].name
+    li.ui-state-default
       form(method='post', action='/players/' + players[player].id)
+        =players[player].name
         input(type='hidden', name='_method', value='delete')
-        input(type='submit', value='Delete')
+        button(type='submit')
+          span(class='ui-icon ui-icon-closethick')
 
   form(method='post', action='/players')
     !=partial('players/edit', { locals: { player: player } })
