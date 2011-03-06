@@ -4,13 +4,12 @@ function nameValidator(v) {
   return v.length > 3 && v.length < 50;
 }
 
-var schema = new mongoose.Schema({
+var Player = new mongoose.Schema({
   name: { type: String, validate: [nameValidator, 'name'] }
 });
 
-schema.pre('save', function(next) {
-    var Player =mongoose.model('Player');
-    Player.findOne({ name: this.name }, function(err, existing) {
+Player.pre('save', function(next) {
+    mongoose.model('Player').findOne({ name: this.name }, function(err, existing) {
       if (existing != null) {
         next(new Error('Player with this name already exists'))
       }
@@ -18,4 +17,4 @@ schema.pre('save', function(next) {
     });
 });
 
-mongoose.model('Player', schema);
+mongoose.model('Player', Player);

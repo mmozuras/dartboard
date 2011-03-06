@@ -17,9 +17,10 @@ script(type='text/javascript')
 
 ul#players(class='ui-sortable')
   li.ui-state-disabled Players
-  - for (var player in players)
-    li.ui-state-default
-      =players[player].name
+  - for (var i in players)
+    li
+      span.ui-state-default
+        =players[i].name
 
 ul#selected-players(class='ui-sortable')
   li.ui-state-disabled Selected players
