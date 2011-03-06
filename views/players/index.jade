@@ -1,5 +1,5 @@
 ul
-  - for (i in players)
+  - for (var i in players)
     - var player = players[i]
     li
       form(method='post', action='/players/' + player.id)

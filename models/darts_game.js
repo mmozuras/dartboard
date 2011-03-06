@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 
 var DartsPlayer = new Schema({
     playerId: ObjectId,
-    score: { type: Number, min: 0, default: 0 },
+    score: { type: Number, min: 0, max: 1001, default: 501 },
 });
 
 var DartsGame = new Schema({
@@ -18,7 +18,7 @@ var DartsGame = new Schema({
 
 DartsGame.virtual('players')
     .set( function(players) {
-      for (i in players) {
+      for (var i in players) {
         this.dartsPlayers.push({playerId: players[i], score: this.startingScore});
       }
     });
@@ -44,12 +44,28 @@ DartsGame.method('score', function(score, modifier) {
       else game.throwNumber++;
     }
 
-    if (modifier == null) modifier = 1;
+    if (!this.isOver()) {
+      if (modifier == null) modifier = 1;
+      validate(score, modifier);
+    
+      var player = this.dartsPlayers[this.currentPlayer];
+      player.score -= score * modifier;
 
-    validate(score, modifier);
-      
-    this.dartsPlayers[this.currentPlayer].score -= score * modifier;
-    nextThrow(this);
+      if (player.score < 0 || 
+          (player.score == 0 && this.out == 2 && modifier != 2) ||
+          player.score == 1 && this.out == 2)
+        player.score += score * modifier;
+
+      nextThrow(this);
+    }
+});
+
+DartsGame.method('isOver', function() {
+    for (var i in this.dartsPlayers) {
+      if (this.dartsPlayers[i].score == 0)
+        return true;
+    }
+    return false;
 });
 
 mongoose.model('DartsGame', DartsGame);
