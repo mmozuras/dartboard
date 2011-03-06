@@ -13,7 +13,7 @@ app.post('/players', function(req, res) {
     var player = new Player(req.body.player);
     
     player.save(function(err) {
-      if (err) return failed('creation', req, res);
+      if (err) return failed(err, req, res);
       
       req.flash('info', 'Player was succesfully created');
       res.redirect('/players');
@@ -22,7 +22,7 @@ app.post('/players', function(req, res) {
 
 app.del('/players/:id', function(req, res) {
     Player.findById(req.params.id, function (err, player) {
-      if (err) return failed('deletion', req, res);
+      if (err) return failed(err, req, res);
       
       player.remove();
       req.flash('info', 'Player was succesfully deleted');
@@ -30,7 +30,7 @@ app.del('/players/:id', function(req, res) {
     });
 });
 
-function failed(action, req, res) {
-  req.flash('error', 'Player ' + action + ' failed');
+function failed(err, req, res) {
+  req.flash('error', err.message);
   res.redirect('/players');
 }

@@ -1,13 +1,13 @@
 script(type='text/javascript')
-  | $(function() {
-  |   $( "ul.droptrue" ).sortable({ connectWith: "ul", items: "li:not(.ui-state-disabled)" });
-  | });
+  $(function() {
+    $( "ul.ui-sortable" ).sortable({ connectWith: "ul.ui-sortable", items: "li:not(.ui-state-disabled)" });
+  });
 
-ul#players(class='droptrue ui-sortable')
+ul#players(class='ui-sortable')
   li.ui-state-disabled Players
   - for (var player in players)
     li.ui-state-default
       =players[player].name
 
-ul#selected-players(class='droptrue ui-sortable')
+ul#selected-players(class='ui-sortable')
   li.ui-state-disabled Selected players
