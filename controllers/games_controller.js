@@ -1,5 +1,5 @@
 var mongoose = require('mongoose'),
-    Game = mongoose.model('Game'),
+    DartsGame = mongoose.model('DartsGame'),
     Player = mongoose.model('Player');
 
 app.get('/games/new', function(req, res) {

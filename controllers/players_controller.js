@@ -12,16 +12,11 @@ app.get('/players', function(req, res) {
 app.post('/players', function(req, res) {
     var player = new Player(req.body.player);
     
-    Player.findOne({name: player.name}, function(err, existing) {
-        if (existing == null) {
-          player.save(function(err) {
-            if (err) return failed('creation', req, res);
+    player.save(function(err) {
+      if (err) return failed('creation', req, res);
       
-            req.flash('info', 'Player was succesfully created');
-            res.redirect('/players');
-          });
-        }
-        else return failed('creation', req, res);
+      req.flash('info', 'Player was succesfully created');
+      res.redirect('/players');
     });
 });
 
