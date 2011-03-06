@@ -21,8 +21,8 @@ module.exports = {
     game.set('players', players);
 
     game.score([48, 54, 60]);
-    game.dartsPlayers[0].score.toString().should.eql(162);
-    game.dartsPlayers[1].score.toString().should.eql(0);
+    game.dartsPlayers[0].score.toString().should.eql(339);
+    game.dartsPlayers[1].score.toString().should.eql(501);
   },
 
   'fourth throw should be scored for the second player': function() {
@@ -30,8 +30,8 @@ module.exports = {
     game.set('players', players);
 
     game.score([16, 18, 20, 1]);
-    game.dartsPlayers[0].score.toString().should.eql(54);
-    game.dartsPlayers[1].score.toString().should.eql(1);
+    game.dartsPlayers[0].score.toString().should.eql(447);
+    game.dartsPlayers[1].score.toString().should.eql(500);
   },
 
   'seventh throw should be scored for the first player if there are two players total': function() {
@@ -39,8 +39,8 @@ module.exports = {
     game.set('players', players);
 
     game.score([1, 2, 3, 4, 5, 6, 7]);
-    game.dartsPlayers[0].score.toString().should.eql(13);
-    game.dartsPlayers[1].score.toString().should.eql(15);
+    game.dartsPlayers[0].score.toString().should.eql(488);
+    game.dartsPlayers[1].score.toString().should.eql(486);
   },
 
   'should not allow to score higher than 60': function() {

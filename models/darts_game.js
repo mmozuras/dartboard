@@ -19,7 +19,7 @@ var DartsGame = new Schema({
 DartsGame.virtual('players')
     .set( function(players) {
       for (i in players) {
-        this.dartsPlayers.push({playerId: players[i], score: 0});
+        this.dartsPlayers.push({playerId: players[i], score: this.startingScore});
       }
     });
 
@@ -32,7 +32,7 @@ DartsGame.method('score', function(scores){
       if (score > 40 && score % 3 != 0) throw 'Can\'t score ' + score;
       if (score > 20 && score % 2 != 0) throw 'Can\'t score ' + score;
 
-      this.dartsPlayers[this.currentPlayer].score += score;
+      this.dartsPlayers[this.currentPlayer].score -= score;
 
       if (this.throwNumber == 2) {
         this.throwNumber = 0;

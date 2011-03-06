@@ -22,7 +22,7 @@ app.post('/games/new', function(req, res) {
 
 app.get('/games/:id', function(req, res) {
     DartsGame.findById(req.params.id, function(err, game) {
-      res.render('games/game.jade', {
+      res.render('games/darts_game.jade', {
         locals: { game: game }
       });
     });
