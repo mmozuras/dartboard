@@ -9,3 +9,21 @@ app.get('/games/new', function(req, res) {
       });
     });
 });
+
+app.post('/games/new', function(req, res) {
+    var selectedPlayers = req.body.players;
+    var dartsGame = new DartsGame();
+    dartsGame.set('players', selectedPlayers);
+
+    dartsGame.save(function(err) {
+      res.redirect('/games/' + dartsGame.id);
+    });
+});
+
+app.get('/games/:id', function(req, res) {
+    DartsGame.findById(req.params.id, function(err, game) {
+      res.render('games/game.jade', {
+        locals: { game: game }
+      });
+    });
+});

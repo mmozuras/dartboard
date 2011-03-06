@@ -1,5 +1,5 @@
 ul
-  - for (var i in players)
+  - for (i in players)
     - var player = players[i]
     li
       form(method='post', action='/players/' + player.id)
@@ -9,7 +9,7 @@ ul
         button(type='submit')
           span(class='ui-icon ui-icon-closethick')
 
-  form(method='post', action='/players')
+  form(method='post')
     div
       input(name='player[name]')
     div

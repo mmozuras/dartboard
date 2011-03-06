@@ -1,0 +1,8 @@
+#id
+  game.id
+ul
+  - for (i in game.dartsPlayers)
+    - var player = game.dartsPlayers[i]
+    li
+      span.ui-state.default
+        =player.id
