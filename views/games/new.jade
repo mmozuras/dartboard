@@ -1,6 +1,18 @@
 script(type='text/javascript')
   $(function() {
-    $( "ul.ui-sortable" ).sortable({ connectWith: "ul.ui-sortable", items: "li:not(.ui-state-disabled)" });
+    $('ul.ui-sortable').sortable({ 
+      connectWith: 'ul.ui-sortable', 
+      items: 'li:not(.ui-state-disabled)' 
+    });
+
+    function movableWithDblClick(from, to) {
+      $(from).live('dblclick', function() {
+        $(this).hide().appendTo($(to)).fadeIn();
+      });
+    };
+
+    movableWithDblClick('ul#players > li', 'ul#selected-players');
+    movableWithDblClick('ul#selected-players > li', 'ul#players');
   });
 
 ul#players(class='ui-sortable')
