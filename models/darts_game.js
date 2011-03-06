@@ -23,27 +23,33 @@ DartsGame.virtual('players')
       }
     });
 
-DartsGame.method('score', function(scores){
-    for (i in scores) {
-      var score = scores[i];
-
-      if (score > 60) throw 'Can\'t score higher than 60';
+DartsGame.method('score', function(score, modifier) {
+    function validate(score, modifier) {
+      if (score == 25 && (modifier == 1 || modifier == 2)) return;
+      if (score > 20) throw 'Can\'t score higher than 20';
       if (score < 0) throw 'Can\'t score lower than 0';
-      if (score > 40 && score % 3 != 0) throw 'Can\'t score ' + score;
-      if (score > 20 && score % 2 != 0) throw 'Can\'t score ' + score;
+      if (modifier > 4) throw 'Modifier bigger than 3 is not allowed';
+      if (modifier < 0) throw 'Negative modifer is not allowed';
+    };
 
-      this.dartsPlayers[this.currentPlayer].score -= score;
+    function nextThrow(game) {
+      if (game.throwNumber == 2) {
+        game.throwNumber = 0;
 
-      if (this.throwNumber == 2) {
-        this.throwNumber = 0;
-
-        if (this.currentPlayer == this.dartsPlayers.length - 1) { 
-          this.currentPlayer = 0;
+        if (game.currentPlayer == game.dartsPlayers.length - 1) { 
+          game.currentPlayer = 0;
         }
-        else this.currentPlayer++;
+        else game.currentPlayer++;
       }
-      else this.throwNumber++;
+      else game.throwNumber++;
     }
+
+    if (modifier == null) modifier = 1;
+
+    validate(score, modifier);
+      
+    this.dartsPlayers[this.currentPlayer].score -= score * modifier;
+    nextThrow(this);
 });
 
 mongoose.model('DartsGame', DartsGame);
