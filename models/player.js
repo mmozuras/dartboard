@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-function nameValidator(v){
+function nameValidator(v) {
   return v.length > 3 && v.length < 50;
 }
 

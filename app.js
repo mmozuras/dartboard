@@ -3,8 +3,8 @@ require("./underscore");
 var path = require('path'),
     fs = require('fs'),
     express = require('express@1.0.7'),
-    jade = require('jade@0.6.3'),
-    mongoose = require('mongoose@1.1.2'),
+    jade = require('jade'),
+    mongoose = require('mongoose'),
     app = global.app = module.exports = express.createServer();
 
 app.configure(function() {
@@ -30,12 +30,18 @@ var db = mongoose.connect(app.set('db-uri'));
 autoload(db, path.join(__dirname, 'models'));
 autoload(db, path.join(__dirname, 'controllers'));
 
-function autoload(db, folder){
-  var files = fs.readdirSync(folder).filter(function(file){ return path.extname(file) == '.js' } ),
-      names = _.map(files,function(f){
-        return( path.basename(f) );
-      });
-  _.each(names,function(controller){ require( folder + '/' + controller )});
+function autoload(db, folder) {
+  var files = fs.readdirSync(folder).filter(function(file) { 
+    return path.extname(file) == '.js' 
+  });
+
+  var names = _.map(files,function(f) {
+    return( path.basename(f) );
+  });
+
+  _.each(names, function(controller) { 
+    require( folder + '/' + controller )
+  });
 }
 
 if (!module.parent) {
