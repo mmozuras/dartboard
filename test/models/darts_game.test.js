@@ -18,35 +18,35 @@ module.exports = {
 
   'should start scoring with the first player': function() {
     var game = new DartsGame();
-    game.set('players', players);
+    game.setPlayers(players);
 
     game.throw(18, 3);
     game.throw(19, 3);
     game.throw(20, 3);
-    game.dartsPlayers[0].score.toString().should.eql(330);
-    game.dartsPlayers[1].score.toString().should.eql(501);
+    game.players[0].score.toString().should.eql(330);
+    game.players[1].score.toString().should.eql(501);
   },
 
   'fourth throw should be scored for the second player': function() {
     var game = new DartsGame();
-    game.set('players', players);
+    game.setPlayers(players);
 
     game.throw(16);
     game.throw(18);
     game.throw(20);
     game.throw(1);
-    game.dartsPlayers[0].score.toString().should.eql(447);
-    game.dartsPlayers[1].score.toString().should.eql(500);
+    game.players[0].score.toString().should.eql(447);
+    game.players[1].score.toString().should.eql(500);
   },
 
   'seventh throw should be scored for the first player if there are two players total': function() {
     var game = new DartsGame();
-    game.set('players', players);
+    game.setPlayers(players);
 
     for (var i = 1; i < 8; i++)
       game.throw(i);
-    game.dartsPlayers[0].score.toString().should.eql(488);
-    game.dartsPlayers[1].score.toString().should.eql(486);
+    game.players[0].score.toString().should.eql(488);
+    game.players[1].score.toString().should.eql(486);
   },
 
   'should not allow to score higher than 20': function() {
@@ -83,79 +83,79 @@ module.exports = {
 
   'should allow to score an outer bull (25)': function() {
     var game = new DartsGame();
-    game.set('players', players);
+    game.setPlayers(players);
 
     game.throw(25);
-    game.dartsPlayers[0].score.toString().should.eql(476);
+    game.players[0].score.toString().should.eql(476);
   },
 
   'should allow to score an inner bull (25*2)': function() {
     var game = new DartsGame();
-    game.set('players', players);
+    game.setPlayers(players);
 
     game.throw(25, 2);
-    game.dartsPlayers[0].score.toString().should.eql(451);
+    game.players[0].score.toString().should.eql(451);
   },
 
   'should only let finish with a double if double out is specified': function() {
     var game = new DartsGame();
-    game.set('players', [new Player({name: 'Mark'})]);
+    game.setPlayers([new Player({name: 'Mark'})]);
 
     game.throw(1);
     for (var i = 0; i < 8; i++)
       game.throw(20, 3);
 
-    game.dartsPlayers[0].score.toString().should.eql(20);
+    game.players[0].score.toString().should.eql(20);
 
     game.throw(20);
-    game.dartsPlayers[0].score.toString().should.eql(20);
+    game.players[0].score.toString().should.eql(20);
 
     game.throw(10, 2);
-    game.dartsPlayers[0].score.toString().should.eql(0);
+    game.players[0].score.toString().should.eql(0);
   },
 
   'should not let player be left with a score of 1 if double out is specified': function() {
     var game = new DartsGame();
-    game.set('players', [new Player({name: 'Mark'})]);
+    game.setPlayers([new Player({name: 'Mark'})]);
 
     for (var i = 0; i < 1000; i++)
       game.throw(1);
 
-    game.dartsPlayers[0].score.toString().should.eql(2);
+    game.players[0].score.toString().should.eql(2);
   },
 
   'should only let finish with exactly 0': function() {
     var game = new DartsGame();
-    game.set('players', [new Player({name: 'Mark'})]);
+    game.setPlayers([new Player({name: 'Mark'})]);
 
     for (var i = 0; i < 8; i++)
       game.throw(20, 3);
 
     game.throw(20, 2);
-    game.dartsPlayers[0].score.toString().should.eql(21);
+    game.players[0].score.toString().should.eql(21);
   },
 
   'should be game over is one player has a score of 0': function() {
     var game = new DartsGame();
-    game.set('players', [new Player({name: 'Mark'})]);
+    game.setPlayers([new Player({name: 'Mark'})]);
 
     for (var i = 0; i < 500; i++)
       game.throw(1);
 
     game.throw(1, 2);
-    game.dartsPlayers[0].score.toString().should.eql(0);
+    game.players[0].score.toString().should.eql(0);
     game.isOver.should.be.ok;
   },
 
   'should not allow additional scoring when the game is over': function() {
     var game = new DartsGame();
-    game.set('players', players);
+    game.setPlayers(players);
 
     for (var i = 0; i < 1000; i++)
       game.throw(1);
 
-    game.dartsPlayers[0].score.toString().should.eql(2);
-    game.dartsPlayers[1].score.toString().should.eql(2);
+    game.players[0].score.toString().should.eql(2);
+    game.players[1].score.toString().should.eql(2);
 
     game.throw(1, 2);
     game.isOver.should.be.ok;
@@ -163,7 +163,7 @@ module.exports = {
     for (var i = 0; i < 10; i++)
       game.throw(1, 2);
 
-    game.dartsPlayers[0].score.toString().should.eql(2);
-    game.dartsPlayers[1].score.toString().should.eql(0);
+    game.players[0].score.toString().should.eql(2);
+    game.players[1].score.toString().should.eql(0);
   },
 }

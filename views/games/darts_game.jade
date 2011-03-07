@@ -1,11 +1,18 @@
-#id
-  game.id
+span
+  :text
+    Current thrower:
+  =game.players[game.currentPlayer].name
+  br
+  :text
+    Throw number:
+  =game.throwNumber + 1
+
 ul
-  - for (var i = 0; i < game.dartsPlayers.length; i++)
-    - var player = game.dartsPlayers[i]
+  - for (var i = 0; i < game.players.length; i++)
+    - var player = game.players[i]
       li
         span.ui-state-default
-          =player.playerName
+          =player.name
         :text
           :
         span.ui-state-default
