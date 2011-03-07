@@ -26,6 +26,10 @@ app.configure('development', function() {
   app.use(express.errorHandler({ dumpExceptions: true }));
 });
 
+app.configure('production', function() {
+  app.set('db-uri', 'mongodb://localhost/dartboard-production');
+});
+
 var db = mongoose.connect(app.set('db-uri'));
 autoload(db, path.join(__dirname, 'models'));
 autoload(db, path.join(__dirname, 'controllers'));
@@ -44,7 +48,5 @@ function autoload(db, folder) {
   });
 }
 
-if (!module.parent) {
-  app.listen(3000);
-  console.log('Express server listening on port %d, environment: %s', app.address().port, app.settings.env);
-}
+app.listen(3000);
+console.log('Express server listening on port %d, environment: %s', app.address().port, app.settings.env);
