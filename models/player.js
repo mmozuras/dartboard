@@ -5,7 +5,7 @@ function nameValidator(v) {
 }
 
 var Player = new mongoose.Schema({
-  name: { type: String, validate: [nameValidator, 'name'] }
+    name: { type: String, required: true, validate: [nameValidator, 'name'] }
 });
 
 Player.pre('save', function(next) {

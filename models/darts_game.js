@@ -4,26 +4,26 @@ var mongoose = require('mongoose'),
 
 
 var DartsPlayer = new Schema({
-    playerId: ObjectId,
-    score: { type: Number, min: 0, max: 1001, default: 501 },
+    playerId: { type: ObjectId, required: true },
+    score: { type: Number, required: true, min: 0, max: 1001, default: 501 },
 });
 
 var DartsGame = new Schema({
-    startingScore: { type: Number, min: 301, max: 1001, default: 501 },
-    out: { type: Number, min: 1, max: 2, default: 2 },
+    startingScore: { type: Number, required: true, min: 301, max: 1001, default: 501 },
+    out: { type: Number, required: true, min: 1, max: 2, default: 2 },
     dartsPlayers: [DartsPlayer],
-    throwNumber: { type: Number, min: 0, max: 2, default: 0 },
-    currentPlayer: { type: Number, default: 0 },
+    throwNumber: { type: Number, required: true, min: 0, max: 2, default: 0 },
+    currentPlayer: { type: Number, required: true, default: 0 },
 });
 
 DartsGame.virtual('players')
     .set( function(players) {
       for (var i in players) {
-        this.dartsPlayers.push({playerId: players[i], score: this.startingScore});
+        this.dartsPlayers.push({playerId: players[i].id, score: this.startingScore});
       }
     });
 
-DartsGame.method('score', function(score, modifier) {
+DartsGame.method('throw', function(score, modifier) {
     function validate(score, modifier) {
       if (score == 25 && (modifier == 1 || modifier == 2)) return;
       if (score > 20) throw 'Can\'t score higher than 20';

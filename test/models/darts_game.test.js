@@ -20,9 +20,9 @@ module.exports = {
     var game = new DartsGame();
     game.set('players', players);
 
-    game.score(18, 3);
-    game.score(19, 3);
-    game.score(20, 3);
+    game.throw(18, 3);
+    game.throw(19, 3);
+    game.throw(20, 3);
     game.dartsPlayers[0].score.toString().should.eql(330);
     game.dartsPlayers[1].score.toString().should.eql(501);
   },
@@ -31,10 +31,10 @@ module.exports = {
     var game = new DartsGame();
     game.set('players', players);
 
-    game.score(16);
-    game.score(18);
-    game.score(20);
-    game.score(1);
+    game.throw(16);
+    game.throw(18);
+    game.throw(20);
+    game.throw(1);
     game.dartsPlayers[0].score.toString().should.eql(447);
     game.dartsPlayers[1].score.toString().should.eql(500);
   },
@@ -44,7 +44,7 @@ module.exports = {
     game.set('players', players);
 
     for (var i = 1; i < 8; i++)
-      game.score(i);
+      game.throw(i);
     game.dartsPlayers[0].score.toString().should.eql(488);
     game.dartsPlayers[1].score.toString().should.eql(486);
   },
@@ -53,7 +53,7 @@ module.exports = {
     var game = new DartsGame();
 
     assert.throws(function() {
-      game.score(21);
+      game.throw(21);
     }, 'Can\'t score higher than 20');
   },
 
@@ -61,7 +61,7 @@ module.exports = {
     var game = new DartsGame();
 
     assert.throws(function() {
-      game.score(-1);
+      game.throw(-1);
     }, 'Can\'t score lower than 0');
   },
 
@@ -69,7 +69,7 @@ module.exports = {
     var game = new DartsGame();
 
     assert.throws(function() {
-      game.score(5, 4);
+      game.throw(5, 4);
     }, 'Modifer bigger than 3 is not allowed');
   },
 
@@ -77,7 +77,7 @@ module.exports = {
     var game = new DartsGame();
 
     assert.throws(function() {
-      game.score(4, -1);
+      game.throw(4, -1);
     }, 'Negative modifier is not allowed');
   },
 
@@ -85,7 +85,7 @@ module.exports = {
     var game = new DartsGame();
     game.set('players', players);
 
-    game.score(25);
+    game.throw(25);
     game.dartsPlayers[0].score.toString().should.eql(476);
   },
 
@@ -93,56 +93,56 @@ module.exports = {
     var game = new DartsGame();
     game.set('players', players);
 
-    game.score(25, 2);
+    game.throw(25, 2);
     game.dartsPlayers[0].score.toString().should.eql(451);
   },
 
   'should only let finish with a double if double out is specified': function() {
     var game = new DartsGame();
-    game.set('players', [new Player()]);
+    game.set('players', [new Player({name: 'Mark'})]);
 
-    game.score(1);
+    game.throw(1);
     for (var i = 0; i < 8; i++)
-      game.score(20, 3);
+      game.throw(20, 3);
 
     game.dartsPlayers[0].score.toString().should.eql(20);
 
-    game.score(20);
+    game.throw(20);
     game.dartsPlayers[0].score.toString().should.eql(20);
 
-    game.score(10, 2);
+    game.throw(10, 2);
     game.dartsPlayers[0].score.toString().should.eql(0);
   },
 
   'should not let player be left with a score of 1 if double out is specified': function() {
     var game = new DartsGame();
-    game.set('players', [new Player()]);
+    game.set('players', [new Player({name: 'Mark'})]);
 
     for (var i = 0; i < 1000; i++)
-      game.score(1);
+      game.throw(1);
 
     game.dartsPlayers[0].score.toString().should.eql(2);
   },
 
   'should only let finish with exactly 0': function() {
     var game = new DartsGame();
-    game.set('players', [new Player()]);
+    game.set('players', [new Player({name: 'Mark'})]);
 
     for (var i = 0; i < 8; i++)
-      game.score(20, 3);
+      game.throw(20, 3);
 
-    game.score(20, 2);
+    game.throw(20, 2);
     game.dartsPlayers[0].score.toString().should.eql(21);
   },
 
   'should be game over is one player has a score of 0': function() {
     var game = new DartsGame();
-    game.set('players', [new Player()]);
+    game.set('players', [new Player({name: 'Mark'})]);
 
     for (var i = 0; i < 500; i++)
-      game.score(1);
+      game.throw(1);
 
-    game.score(1, 2);
+    game.throw(1, 2);
     game.dartsPlayers[0].score.toString().should.eql(0);
     game.isOver.should.be.ok;
   },
@@ -152,16 +152,16 @@ module.exports = {
     game.set('players', players);
 
     for (var i = 0; i < 1000; i++)
-      game.score(1);
+      game.throw(1);
 
     game.dartsPlayers[0].score.toString().should.eql(2);
     game.dartsPlayers[1].score.toString().should.eql(2);
 
-    game.score(1, 2);
+    game.throw(1, 2);
     game.isOver.should.be.ok;
 
     for (var i = 0; i < 10; i++)
-      game.score(1, 2);
+      game.throw(1, 2);
 
     game.dartsPlayers[0].score.toString().should.eql(2);
     game.dartsPlayers[1].score.toString().should.eql(0);
