@@ -1,8 +1,16 @@
 #id
   game.id
 ul
-  - for (var i in game.dartsPlayers)
-    - var player = game.dartsPlayers[i];
-    li
-      span.ui-state.default
-        =player.score
+  - for (var i = 0; i < game.dartsPlayers.length; i++)
+    - var player = game.dartsPlayers[i]
+      li
+        span.ui-state-default
+          =player.playerName
+        :text
+          :
+        span.ui-state-default
+          =player.score
+  
+form(method='post')
+  input(type='text', name='score')
+  input(type='submit', value='Score')

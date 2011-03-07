@@ -5,6 +5,7 @@ var mongoose = require('mongoose'),
 
 var DartsPlayer = new Schema({
     playerId: { type: ObjectId, required: true },
+    playerName: { type: String, required: true },
     score: { type: Number, required: true, min: 0, max: 1001, default: 501 },
 });
 
@@ -19,7 +20,11 @@ var DartsGame = new Schema({
 DartsGame.virtual('players')
     .set( function(players) {
       for (var i in players) {
-        this.dartsPlayers.push({playerId: players[i].id, score: this.startingScore});
+        this.dartsPlayers.push({
+            playerId: players[i].id, 
+            playerName: players[i].name, 
+            score: this.startingScore
+        });
       }
     });
 

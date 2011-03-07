@@ -19,7 +19,8 @@ ul#players(class='ui-sortable')
   li.ui-state-disabled Players
   - for (var i in players)
     li
-      input(type='hidden', name='players[' + i + '[id]]', value=players[i].id) 
+      input(type='hidden', name='players[' + i + '[id]', value=players[i].id) 
+      input(type='hidden', name='players[' + i + '[name]', value=players[i].name)
       span.ui-state-default
         =players[i].name
 

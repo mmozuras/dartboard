@@ -13,6 +13,7 @@ app.get('/games/new', function(req, res) {
 app.post('/games/new', function(req, res) {
     var selectedPlayers = req.body.players;
     var dartsGame = new DartsGame();
+    console.log(selectedPlayers);
     dartsGame.set('players', selectedPlayers);
 
     dartsGame.save(function(err) {
@@ -24,6 +25,17 @@ app.get('/games/:id', function(req, res) {
     DartsGame.findById(req.params.id, function(err, game) {
       res.render('games/darts_game.jade', {
         locals: { game: game }
+      });
+    });
+});
+
+app.post('/games/:id', function(req, res) {
+    DartsGame.findById(req.params.id, function(err, game) {
+      game.throw(req.body.score);
+      game.save(function(err) {
+        res.render('games/darts_game.jade', {
+          locals: { game: game }
+        });
       });
     });
 });
