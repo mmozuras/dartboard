@@ -1,20 +1,20 @@
 var path = require('path'),
     fs = require('fs'),
-    express = require('express@1.0.7'),
+    express = require('express'),
     jade = require('jade'),
     mongoose = require('mongoose'),
     app = global.app = module.exports = express.createServer();
 
 app.configure(function() {
   app.use(express.favicon());
-  app.use(express.bodyDecoder());
-  app.use(express.cookieDecoder());
+  app.use(express.bodyParser());
+  app.use(express.cookieParser());
   app.use(express.session({ secret: 'supersecret' }));
   app.use(express.logger({ format: '\x1b[1m:method\x1b[0m \x1b[33m:url\x1b[0m \x1b[1m:status\x1b[0m :response-time ms' }))
   app.use(express.methodOverride());
   app.use(express.compiler({ src: __dirname + '/public', enable: ['less'] }));
   app.use(app.router);
-  app.use(express.staticProvider(__dirname + '/public'));
+  app.use(express.static(__dirname + '/public'));
 });
 
 app.dynamicHelpers(require('./helpers.js').dynamicHelpers);
