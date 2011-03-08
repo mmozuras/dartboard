@@ -1,3 +1,9 @@
+script(type='text/javascript', src='/js/jquery.maphilight.min.js')
+script(type='text/javascript')
+  $(function() {
+    $('.map').maphilight(); 
+  });
+
 span
   :text
     Current thrower:
@@ -21,3 +27,7 @@ ul
 form(method='post')
   input(type='text', name='score')
   input(type='submit', value='Score')
+
+img.map(src='/images/board.small.jpg', usemap='#board')
+map(name='board')
+  area(shape='poly', coords='313,93,389,94,390,113,347,105,315,110,313,93')
