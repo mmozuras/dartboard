@@ -1,5 +1,3 @@
-require("./underscore");
-
 var path = require('path'),
     fs = require('fs'),
     express = require('express@1.0.7'),
@@ -39,13 +37,14 @@ function autoload(db, folder) {
     return path.extname(file) == '.js' 
   });
 
-  var names = _.map(files,function(f) {
-    return( path.basename(f) );
-  });
+  var names = [];
+  for (var file in files) {
+    names.push(path.basename(files[file]));
+  }
 
-  _.each(names, function(controller) { 
-    require( folder + '/' + controller )
-  });
+  for (var name in names) {
+    require(folder + '/' + names[name])
+  }
 }
 
 app.listen(3000);

@@ -13,7 +13,6 @@ app.get('/games/new', function(req, res) {
 app.post('/games/new', function(req, res) {
     var selectedPlayers = req.body.players;
     var dartsGame = new DartsGame();
-    console.log(selectedPlayers);
     dartsGame.setPlayers(selectedPlayers);
 
     dartsGame.save(function(err) {
