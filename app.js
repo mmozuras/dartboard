@@ -38,12 +38,12 @@ function autoload(db, folder) {
   });
 
   var names = [];
-  for (var file in files) {
-    names.push(path.basename(files[file]));
+  for (var f in files) {
+    names.push(path.basename(files[f]));
   }
 
-  for (var name in names) {
-    require(folder + '/' + names[name])
+  for (var n in names) {
+    require(folder + '/' + names[n])
   }
 }
 
