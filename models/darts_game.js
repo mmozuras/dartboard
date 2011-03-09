@@ -87,4 +87,16 @@ DartsGame.method('isOver', function() {
     return false;
 });
 
+DartsGame.method('lastThrower', function() {
+     if (this.throwNumber == 0) {
+        if (this.currentPlayer == 0) {
+          return this.players[this.players.length - 1];
+        }
+        return this.players[this.currentPlayer - 1];
+     }
+     else {
+        return this.players[this.currentPlayer];
+     }
+});
+
 mongoose.model('DartsGame', DartsGame);

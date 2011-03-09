@@ -2,12 +2,6 @@ script(type='text/javascript', src='/js/jquery.maphilight.min.js')
 script(type='text/javascript')
   $(function() {
     $('.board').maphilight({stroke: false, fillOpacity: 0.5});
-    $('area').click(function() {
-      $.post(window.location.pathname, { score: $(this).attr('title')}, function(data) {      
-        //TODO: Ajaxify this!
-        window.location.reload();
-      });
-    });
   });
 
 #board

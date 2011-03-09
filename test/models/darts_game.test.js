@@ -199,4 +199,16 @@ module.exports = {
     game.parseThrow('qwe');
     game.players[0].score.toString().should.eql(501);
   },
+
+  'should get the last thrower': function() {
+    var game = new DartsGame();
+    game.setPlayers(players);
+    
+    game.throw(1);
+    game.throw(2);
+    game.throw(3);
+    game.lastThrower().name.should.eql('Bill');
+    game.throw(4);
+    game.lastThrower().name.should.eql('Steve');
+  },
 }

@@ -32,9 +32,7 @@ app.post('/games/:id', function(req, res) {
     DartsGame.findById(req.params.id, function(err, game) {
       game.parseThrow(req.body.score);
       game.save(function(err) {
-        res.render('games/darts_game.jade', {
-          locals: { game: game }
-        });
+        res.send('Success');
       });
     });
 });
