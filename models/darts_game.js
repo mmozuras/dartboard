@@ -63,6 +63,22 @@ DartsGame.method('throw', function(score, modifier) {
     }
 });
 
+String.prototype.startsWith = function(str) {
+    return (this.indexOf(str) === 0);
+};
+
+DartsGame.method('parseThrow', function(score) {
+    if (score.startsWith('D')) {
+      this.throw(score.substring(1), 2);
+    }
+    else if (score.startsWith('T')) {
+      this.throw(score.substring(1), 3);
+    }
+    else {
+      this.throw(+score)
+    }
+});
+
 DartsGame.method('isOver', function() {
     for (var i in this.players) {
       if (this.players[i].score == 0)

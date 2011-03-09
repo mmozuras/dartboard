@@ -166,4 +166,37 @@ module.exports = {
     game.players[0].score.toString().should.eql(2);
     game.players[1].score.toString().should.eql(0);
   },
+
+  'should allow to score D10': function() {
+    var game = new DartsGame();
+    game.setPlayers([new Player({name: 'Mark'})]);
+
+    game.parseThrow('D10');
+
+    game.players[0].score.toString().should.eql(481);
+  },
+
+  'should allow to score T18': function() {
+    var game = new DartsGame();
+    game.setPlayers([new Player({name: 'Mark'})]);
+
+    game.parseThrow('T18');
+    game.players[0].score.toString().should.eql(447);
+  },
+
+  'should allow to score 3': function() {
+    var game = new DartsGame();
+    game.setPlayers([new Player({name: 'Mark'})]);
+
+    game.parseThrow('3');
+    game.players[0].score.toString().should.eql(498);
+  },
+
+  'should score random letters as zero': function() {
+    var game = new DartsGame();
+    game.setPlayers([new Player({name: 'Mark'})]);
+
+    game.parseThrow('qwe');
+    game.players[0].score.toString().should.eql(501);
+  },
 }
