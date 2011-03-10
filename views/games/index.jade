@@ -1,0 +1,12 @@
+ul
+  - for (var g in games)
+    - var game = games[g];
+    li
+      form(method='post', action='/games/' + game.id)
+        span.ui-state-default
+          a(href='/games/' + game.id)
+           =_.map(game.players, function(player) { return player.name + ': ' + player.score }).join(', ')
+        - if (!game.isOver())
+          input(type='hidden', name='_method', value='delete')
+          button(type='submit')
+            span(class='ui-icon ui-icon-closethick')

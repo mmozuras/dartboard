@@ -2,6 +2,14 @@ var mongoose = require('mongoose'),
     DartsGame = mongoose.model('DartsGame'),
     Player = mongoose.model('Player');
 
+app.get('/games', function(req, res) {
+    DartsGame.find({}, function(err, games) {
+        res.render('games/index.jade', {
+          locals: { games: games}
+        });
+    });
+});
+
 app.get('/games/new', function(req, res) {
     Player.find({}, function(err, players) {
       res.render('games/new.jade', {
@@ -34,5 +42,13 @@ app.post('/games/:id', function(req, res) {
       game.save(function(err) {
         res.send('Success');
       });
+    });
+});
+
+app.del('/games/:id', function(req, res) {
+    DartsGame.findById(req.params.id, function(err, game) {
+      game.remove();
+      req.flash('info', 'Game was succesfully canceled');
+      res.redirect('games');
     });
 });
