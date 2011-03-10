@@ -1,5 +1,5 @@
 app.get('/404', function(req, res) {
-    throw new NotFound;
+    res.render('404.jade', { layout: false });
 });
 
 app.get('/', function(req, res) {
