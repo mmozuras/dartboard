@@ -1,11 +1,17 @@
 var mongoose = require('mongoose'),
+    _ = require('underscore'),
     Schema = mongoose.Schema,
     ObjectId = Schema.ObjectId;
 
+var Throw = new Schema({
+    score: { type: Number, required: true, min: 0, max: 60 },
+    modifier: { type: Number, required: true, min: 1, max: 3 },
+});
 
 var DartsPlayer = new Schema({
     name: { type: String, required: true },
     score: { type: Number, required: true, min: 0, max: 1001, default: 501 },
+    throws: [Throw],
 });
 
 var DartsGame = new Schema({
@@ -53,6 +59,7 @@ DartsGame.method('throw', function(score, modifier) {
     
       var player = this.players[this.currentPlayer];
       player.score -= score * modifier;
+      player.throws.push({score: score, modifier: modifier});
 
       if (player.score < 0 || 
          (player.score == 0 && this.out == 2 && modifier != 2) ||
@@ -80,11 +87,9 @@ DartsGame.method('parseThrow', function(score) {
 });
 
 DartsGame.method('isOver', function() {
-    for (var i in this.players) {
-      if (this.players[i].score == 0)
-        return true;
-    }
-    return false;
+    return _.any(this.players, function(player) { 
+      return player.score == 0;
+    });
 });
 
 DartsGame.method('lastThrower', function() {

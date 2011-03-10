@@ -5,8 +5,20 @@ require('../../models/player');
 var mongoose = require('mongoose'),
     assert = require('assert'),
     DartsGame = mongoose.model('DartsGame'),
-    Player= mongoose.model('Player'),
-    players = [new Player({name: 'Bill'}), new Player({name: 'Steve'})];
+    Player= mongoose.model('Player');
+
+var GameWithOnePlayer = function() {
+  var game = new DartsGame();
+  game.setPlayers([new Player({name: 'Mark'})]);
+  return game;
+};
+
+var GameWithTwoPlayers = function() {
+  var game = new DartsGame();
+  var players = [new Player({name: 'Bill'}), new Player({name: 'Steve'})];
+  game.setPlayers(players);
+  return game;
+};
 
 module.exports = {
   'new game should default to 501 and double-out': function() {
@@ -17,8 +29,7 @@ module.exports = {
   },
 
   'should start scoring with the first player': function() {
-    var game = new DartsGame();
-    game.setPlayers(players);
+    var game = GameWithTwoPlayers();
 
     game.throw(18, 3);
     game.throw(19, 3);
@@ -28,8 +39,7 @@ module.exports = {
   },
 
   'fourth throw should be scored for the second player': function() {
-    var game = new DartsGame();
-    game.setPlayers(players);
+    var game = GameWithTwoPlayers();
 
     game.throw(16);
     game.throw(18);
@@ -40,8 +50,7 @@ module.exports = {
   },
 
   'seventh throw should be scored for the first player if there are two players total': function() {
-    var game = new DartsGame();
-    game.setPlayers(players);
+    var game = GameWithTwoPlayers();
 
     for (var i = 1; i < 8; i++)
       game.throw(i);
@@ -82,24 +91,21 @@ module.exports = {
   },
 
   'should allow to score an outer bull (25)': function() {
-    var game = new DartsGame();
-    game.setPlayers(players);
+    var game = GameWithTwoPlayers();
 
     game.throw(25);
     game.players[0].score.toString().should.eql(476);
   },
 
   'should allow to score an inner bull (25*2)': function() {
-    var game = new DartsGame();
-    game.setPlayers(players);
+    var game = GameWithTwoPlayers();
 
     game.throw(25, 2);
     game.players[0].score.toString().should.eql(451);
   },
 
   'should only let finish with a double if double out is specified': function() {
-    var game = new DartsGame();
-    game.setPlayers([new Player({name: 'Mark'})]);
+    var game = GameWithOnePlayer();
 
     game.throw(1);
     for (var i = 0; i < 8; i++)
@@ -115,8 +121,7 @@ module.exports = {
   },
 
   'should not let player be left with a score of 1 if double out is specified': function() {
-    var game = new DartsGame();
-    game.setPlayers([new Player({name: 'Mark'})]);
+    var game = GameWithOnePlayer();
 
     for (var i = 0; i < 1000; i++)
       game.throw(1);
@@ -125,8 +130,7 @@ module.exports = {
   },
 
   'should only let finish with exactly 0': function() {
-    var game = new DartsGame();
-    game.setPlayers([new Player({name: 'Mark'})]);
+    var game = GameWithOnePlayer();
 
     for (var i = 0; i < 8; i++)
       game.throw(20, 3);
@@ -136,8 +140,7 @@ module.exports = {
   },
 
   'should be game over is one player has a score of 0': function() {
-    var game = new DartsGame();
-    game.setPlayers([new Player({name: 'Mark'})]);
+    var game = GameWithOnePlayer();
 
     for (var i = 0; i < 500; i++)
       game.throw(1);
@@ -148,8 +151,7 @@ module.exports = {
   },
 
   'should not allow additional scoring when the game is over': function() {
-    var game = new DartsGame();
-    game.setPlayers(players);
+    var game = GameWithTwoPlayers();
 
     for (var i = 0; i < 1000; i++)
       game.throw(1);
@@ -168,8 +170,7 @@ module.exports = {
   },
 
   'should allow to score D10': function() {
-    var game = new DartsGame();
-    game.setPlayers([new Player({name: 'Mark'})]);
+    var game = GameWithOnePlayer();
 
     game.parseThrow('D10');
 
@@ -177,32 +178,28 @@ module.exports = {
   },
 
   'should allow to score T18': function() {
-    var game = new DartsGame();
-    game.setPlayers([new Player({name: 'Mark'})]);
+    var game = GameWithOnePlayer();
 
     game.parseThrow('T18');
     game.players[0].score.toString().should.eql(447);
   },
 
   'should allow to score 3': function() {
-    var game = new DartsGame();
-    game.setPlayers([new Player({name: 'Mark'})]);
+    var game = GameWithOnePlayer();
 
     game.parseThrow('3');
     game.players[0].score.toString().should.eql(498);
   },
 
   'should score random letters as zero': function() {
-    var game = new DartsGame();
-    game.setPlayers([new Player({name: 'Mark'})]);
+    var game = GameWithOnePlayer();
 
     game.parseThrow('qwe');
     game.players[0].score.toString().should.eql(501);
   },
 
   'should get the last thrower': function() {
-    var game = new DartsGame();
-    game.setPlayers(players);
+    var game = GameWithTwoPlayers();
     
     game.throw(1);
     game.throw(2);
@@ -210,5 +207,17 @@ module.exports = {
     game.lastThrower().name.should.eql('Bill');
     game.throw(4);
     game.lastThrower().name.should.eql('Steve');
+  },
+
+  'should register all the throws': function() {
+    var game = GameWithTwoPlayers();
+
+    game.throw(1);
+    game.throw(14, 3);
+
+    game.players[0].throws[0].score.toString().should.eql(1);
+    game.players[0].throws[0].modifier.toString().should.eql(1);
+    game.players[0].throws[1].score.toString().should.eql(14);
+    game.players[0].throws[1].modifier.toString().should.eql(3);
   },
 }

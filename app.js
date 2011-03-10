@@ -2,8 +2,11 @@ var path = require('path'),
     fs = require('fs'),
     express = require('express'),
     jade = require('jade'),
-    mongoose = require('mongoose'),
-    app = global.app = module.exports = express.createServer();
+    mongoose = require('mongoose');
+
+global._ = require('underscore');
+global.app = module.exports = express.createServer();
+
 
 app.configure(function() {
   app.use(express.favicon());
@@ -37,14 +40,13 @@ function autoload(db, folder) {
     return path.extname(file) == '.js' 
   });
 
-  var names = [];
-  for (var f in files) {
-    names.push(path.basename(files[f]));
-  }
+  var names = _.map(files, function(file) {
+      return path.basename(file) 
+  });
 
-  for (var n in names) {
-    require(folder + '/' + names[n])
-  }
+  _.each(names, function(name) {
+    require(folder + '/' + name)
+  });
 }
 
 app.listen(3000);
