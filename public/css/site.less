@@ -31,11 +31,22 @@ em { color: red; }
   clear: left;
   text-align: center;
   .ui-state-default;
+
+  a {
+    font-size: 85%;
+    font-variant: small-caps;
+    text-decoration: none;
+    color: #000;
+    outline: none;
+    z-index: 10;
+    position: relative;
+    margin: auto 10px;  
+  }
 }
 
 #board {
   float: left;
-  width: 800px;
+  padding: 10px 60px 10px 0;
 }
 
 .flash {
@@ -68,13 +79,10 @@ em { color: red; }
       text-align: center;
       top: 7px;
       text-transform: uppercase;
-      letter-spacing: 0;
       z-index: 10;
-      display: block;
       float: left;
       height: 30px;
       position: relative;
-      overflow: hidden;
       margin: auto 10px;   
     }
   }
