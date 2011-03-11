@@ -2,7 +2,6 @@ script(type='text/javascript')
   $(function() {
     $('area').click(function() {
       $.post(window.location.pathname, { score: $(this).attr('title')}, function(data) {    
-        //TODO: Ajaxify this?
         window.location.reload();
       });
     });
@@ -15,26 +14,26 @@ script(type='text/javascript')
 !=partial('board')
 
 #scores
-  span
-    :text
-      Current thrower:
-    =game.players[game.currentPlayer].name
-    br
-    :text
-      Throw number:
-    =game.throwNumber + 1
+  #currentPlayer
+    - var player = game.players[game.currentPlayer]
+      span.name
+        =player.name
+      span.score
+        =game.players[game.currentPlayer].score
+      div
+      - for (var i = player.throws.length; i > player.throws.length - game.throwNumber; i--)
+        span.throw
+          - var t = player.throws[i - 1]
+            =t.score * t.modifier
 
   input.lastThrower(type='hidden', value=game.lastThrower().name)
   ul
     - for (var i = 0; i < game.players.length; i++)
-      - var player = game.players[i]
-        li(class=player.name)
-          span.ui-state-default
-            =player.name
-          :text
-            :
-          span.ui-state-default
-            =player.score
+      - if (i != game.currentPlayer)
+        - var player = game.players[i]
+          li(class=player.name)
+            span.ui-state-default
+              =player.name + " : " + player.score
 
   form(method='post', action='/games/' + game.id + '/undoThrow')
     input(type='submit', value='Undo Throw')
