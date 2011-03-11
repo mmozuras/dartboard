@@ -52,3 +52,12 @@ app.del('/games/:id', function(req, res) {
       res.redirect('games');
     });
 });
+
+app.post('/games/:id/undoThrow', function(req, res) {
+    DartsGame.findById(req.params.id, function(err, game) {
+      game.undoThrow();
+      game.save(function(err) {
+        res.redirect('/games/' + req.params.id);
+      });
+    });
+});

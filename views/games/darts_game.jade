@@ -35,3 +35,6 @@ script(type='text/javascript')
             :
           span.ui-state-default
             =player.score
+
+  form(method='post', action='/games/' + game.id + '/undoThrow')
+    input(type='submit', value='Undo Throw')

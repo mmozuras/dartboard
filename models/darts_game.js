@@ -4,15 +4,30 @@ var mongoose = require('mongoose'),
     ObjectId = Schema.ObjectId;
 
 var Throw = new Schema({
-    score: { type: Number, required: true, min: 0, max: 60 },
+    score: { type: Number, required: true, min: 0, max: 25 },
     modifier: { type: Number, required: true, min: 1, max: 3 },
 });
 
 var DartsPlayer = new Schema({
     name: { type: String, required: true },
-    score: { type: Number, required: true, min: 0, max: 1001, default: 501 },
     throws: [Throw],
 });
+
+DartsPlayer.virtual('score')
+  .get( function() {
+      var game = this.parentArray._parent;
+      if (_.isEmpty(this.throws)) return +game.startingScore;
+
+      return _.reduce(this.throws, function(memo, t) {
+        var potentialScore = memo - t.score * t.modifier;
+
+        if (potentialScore < 0 ||
+            potentialScore == 0 && game.out == 2 && t.modifier != 2 ||
+            potentialScore == 1 && game.out == 2) 
+          return memo;
+        else return potentialScore;
+      }, +game.startingScore);
+  });
 
 var DartsGame = new Schema({
     startingScore: { type: Number, required: true, min: 301, max: 1001, default: 501 },
@@ -27,7 +42,6 @@ DartsGame.method('setPlayers', function(players) {
       this.players.push({
         id: players[i].id, 
         name: players[i].name, 
-        score: this.startingScore
       });
     }
 });
@@ -44,7 +58,7 @@ DartsGame.method('throw', function(score, modifier) {
     function nextThrow(game) {
       if (game.throwNumber == 2) {
         game.throwNumber = 0;
-
+        
         if (game.currentPlayer == game.players.length - 1) { 
           game.currentPlayer = 0;
         }
@@ -58,13 +72,7 @@ DartsGame.method('throw', function(score, modifier) {
       validate(score, modifier);
     
       var player = this.players[this.currentPlayer];
-      player.score -= score * modifier;
       player.throws.push({score: score, modifier: modifier});
-
-      if (player.score < 0 || 
-         (player.score == 0 && this.out == 2 && modifier != 2) ||
-          player.score == 1 && this.out == 2)
-        player.score += score * modifier;
 
       nextThrow(this);
     }
@@ -82,13 +90,20 @@ DartsGame.method('parseThrow', function(score) {
       this.throw(score.substring(1), 3);
     }
     else {
-      this.throw(+score)
+      if (_.isNumber(+score)) this.throw(+score);
+      else throw 'Not a legal score';
     }
 });
 
 DartsGame.method('isOver', function() {
     return _.any(this.players, function(player) { 
       return player.score == 0;
+    });
+});
+
+DartsGame.method('isStarted', function() {
+    return _.any(this.players, function(player) {
+      return !_.isEmpty(player.throws);
     });
 });
 
@@ -103,5 +118,24 @@ DartsGame.method('lastThrower', function() {
         return this.players[this.currentPlayer];
      }
 });
+
+DartsGame.method('undoThrow', function() {
+    if (this.isStarted()) {
+      if (this.throwNumber == 0) {
+        this.throwNumber = 2;
+        if (this.currentPlayer == 0) {
+          this.currentPlayer = this.players.length - 1;
+        }
+        else {
+          this.currentPlayer--;
+        }      
+      }
+      else {  
+        this.throwNumber--;
+      }
+
+      _.last(this.players[this.currentPlayer].throws).remove();
+    }
+   });
 
 mongoose.model('DartsGame', DartsGame);

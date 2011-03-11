@@ -1,6 +1,6 @@
 ul
-  - for (var i in players)
-    - var player = players[i]
+  - for (var p in players)
+    - var player = players[p]
     li
       form(method='post', action='/players/' + player.id)
         span.ui-state-default
