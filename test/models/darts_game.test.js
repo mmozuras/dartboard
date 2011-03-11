@@ -123,10 +123,12 @@ module.exports = {
   'should not let player be left with a score of 1 if double out is specified': function() {
     var game = GameWithOnePlayer();
 
-    for (var i = 0; i < 1000; i++)
-      game.throw(1);
+    for (var i = 0; i < 40; i++)
+      game.throw(15, 3);
 
-    game.players[0].score.should.eql(2);
+    game.throw(5);
+
+    game.players[0].score.should.eql(6);
   },
 
   'should only let finish with exactly 0': function() {
@@ -142,10 +144,10 @@ module.exports = {
   'should be game over is one player has a score of 0': function() {
     var game = GameWithOnePlayer();
 
-    for (var i = 0; i < 500; i++)
-      game.throw(1);
+    for (var i = 0; i < 40; i++)
+      game.throw(15, 3);
 
-    game.throw(1, 2);
+    game.throw(3, 2);
     game.players[0].score.should.eql(0);
     game.isOver.should.be.ok;
   },
@@ -153,19 +155,16 @@ module.exports = {
   'should not allow additional scoring when the game is over': function() {
     var game = GameWithTwoPlayers();
 
-    for (var i = 0; i < 1000; i++)
-      game.throw(1);
+    for (var i = 0; i < 40; i++)
+      game.throw(15, 3);
 
-    game.players[0].score.should.eql(2);
-    game.players[1].score.should.eql(2);
-
-    game.throw(1, 2);
+    game.throw(3, 2);
     game.isOver.should.be.ok;
 
     for (var i = 0; i < 10; i++)
-      game.throw(1, 2);
+      game.throw(3, 2);
 
-    game.players[0].score.should.eql(2);
+    game.players[0].score.should.eql(6);
     game.players[1].score.should.eql(0);
   },
 
@@ -287,12 +286,12 @@ module.exports = {
     var game = GameWithOnePlayer();
     game.throw(1);
 
-    game.isStarted().should.eql(true);
+    game.isStarted().should.be.ok;
   },
 
   'should be able to determine that the game hasn\'t started': function() {
     var game = GameWithOnePlayer();
 
-    game.isStarted().should.eql(false);
+    game.isStarted().should.be.false;
   },
 }
