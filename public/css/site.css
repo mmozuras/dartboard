@@ -839,8 +839,14 @@ b {
 em {
   color: red;
 }
-#top {
-  height: 70px;
+#container {
+  margin-left: 4%;
+  margin-right: 4%;
+  border-style: groove;
+  border-width: 1px;
+}
+#header {
+  height: 65px;
   border: 1px solid #dddddd;
   background: #f6f6f6 url(images/ui-bg_highlight-soft_100_f6f6f6_1x100.png) 50% 50% repeat-x;
   font-weight: bold;
@@ -848,25 +854,8 @@ em {
   color: #0073ea;
   text-decoration: none;
 }
-#top h1 {
-  margin: 0;
-  padding-top: 15px;
-}
-#contentwrapper {
-  float: left;
-  width: 100%;
-}
 #content {
-  margin-left: 200px;
-}
-#left {
-  float: left;
-  width: 200px;
-  margin-left: -100%;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 1.1em;
-  font-family: Helvetica, Arial, sans-serif;
-  font-size: 1em;
+  margin-left: 60px;
 }
 #footer {
   clear: left;
@@ -890,4 +879,37 @@ em {
   padding: 0 5px;
   opacity: 0.9;
   font-weight: bold;
+}
+.menu {
+  position: relative;
+  padding: 15px;
+  margin: 3px 0;
+  overflow: hidden;
+}
+.menu li {
+  float: left;
+  list-style: none;
+}
+.menu li a {
+  text-decoration: none;
+  color: #000;
+  outline: none;
+  text-align: center;
+  top: 7px;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  z-index: 10;
+  display: block;
+  float: left;
+  height: 30px;
+  position: relative;
+  overflow: hidden;
+  margin: auto 10px;
+}
+.menu li.back {
+  border-bottom: 5px solid #0073ea;
+  width: 9px;
+  height: 30px;
+  z-index: 8;
+  position: absolute;
 }

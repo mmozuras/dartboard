@@ -11,31 +11,20 @@ body {
 b { font-size: 110%; }
 em { color: red; }
 
-#top {
-  height: 70px; 
+#container {
+  margin-left: 4%;
+  margin-right: 4%;
+  border-style: groove;
+  border-width: 1px;
+}
 
-  h1 {
-    margin: 0;
-    padding-top: 15px;
-  }
-
+#header {
+  height: 65px; 
   .ui-state-default;
 }
 
-#contentwrapper {
-  float: left; 
-  width: 100%;
-}
-
 #content {
-  margin-left: 200px; 
-}
-
-#left {
-  float: left;
-  width: 200px; 
-  margin-left: -100%;
-  .ui-widget;
+  margin-left: 60px; 
 }
 
 #footer {
@@ -59,5 +48,42 @@ em { color: red; }
     padding: 0 5px;
     opacity: 0.9;
     font-weight: bold;
+  }
+}
+
+.menu {
+  position: relative;
+  padding: 15px;
+  margin: 3px 0;
+  overflow: hidden;
+
+  li {
+    float: left;
+    list-style: none;
+
+    a {
+      text-decoration: none;
+      color: #000;
+      outline: none;
+      text-align: center;
+      top: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+      z-index: 10;
+      display: block;
+      float: left;
+      height: 30px;
+      position: relative;
+      overflow: hidden;
+      margin: auto 10px;   
+    }
+  }
+
+  li.back {
+    border-bottom: 5px solid #0073ea;
+    width: 9px;
+    height: 30px;
+    z-index: 8;
+    position: absolute;
   }
 }
