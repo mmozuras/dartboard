@@ -11,7 +11,7 @@ html
 
     script(type='text/javascript')
       $(function() {
-        $('ul.menu ').lavaLamp({
+        $('#menu > ul').lavaLamp({
           fx: 'backout',
           speed: 700,
         });
@@ -19,15 +19,16 @@ html
   body
     #container
       #header
-        ul.menu
-          li
-            a(href='/') DartBoard
-          li
-            a(href='/players') Players
-          li
-            a(href='/games') Games
-          li
-            a(href='/games/new') New Game
+        #menu
+          ul
+            li
+              a(href='/') DartBoard
+            li
+              a(href='/players') Players
+            li
+              a(href='/games') Games
+            li
+              a(href='/games/new') New Game
 
         #user
           a(href='/users/logout') Log Out

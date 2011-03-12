@@ -850,16 +850,20 @@
 #header {
   height: 65px;
 }
-.menu {
+#header #menu {
+  float: left;
+  width: 800px;
+}
+#header #menu ul {
   position: relative;
   padding: 15px;
   margin: 3px 0;
   overflow: hidden;
 }
-.menu li {
+#header #menu ul li {
   float: left;
 }
-.menu li a {
+#header #menu ul li a {
   text-decoration: none;
   color: #000;
   outline: none;
@@ -872,12 +876,15 @@
   position: relative;
   margin: auto 10px;
 }
-.menu li.back {
+#header #menu ul li.back {
   border-bottom: 5px solid #0073ea;
   width: 9px;
   height: 30px;
   z-index: 8;
   position: absolute;
+}
+#header #user {
+  float: right;
 }
 ul {
   list-style-type: none;
