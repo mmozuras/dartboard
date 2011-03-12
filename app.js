@@ -18,6 +18,7 @@ app.configure(function() {
   app.use(express.compiler({ src: __dirname + '/public', enable: ['less'] }));
   app.use(app.router);
   app.use(express.static(__dirname + '/public'));
+  app.set('view engine', 'jade');
 });
 
 app.dynamicHelpers(require('./helpers.js').dynamicHelpers);

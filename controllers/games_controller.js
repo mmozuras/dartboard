@@ -4,7 +4,7 @@ var mongoose = require('mongoose'),
 
 app.get('/games', function(req, res) {
     DartsGame.find({}, function(err, games) {
-        res.render('games/index.jade', {
+        res.render('games/index', {
           locals: { games: games}
         });
     });
@@ -12,7 +12,7 @@ app.get('/games', function(req, res) {
 
 app.get('/games/new', function(req, res) {
     Player.find({}, function(err, players) {
-      res.render('games/new.jade', {
+      res.render('games/new', {
         locals: { players: players }
       });
     });
@@ -30,7 +30,7 @@ app.post('/games/new', function(req, res) {
 
 app.get('/games/:id', function(req, res) {
     DartsGame.findById(req.params.id, function(err, game) {
-      res.render('games/darts_game.jade', {
+      res.render('games/darts_game', {
         locals: { game: game }
       });
     });

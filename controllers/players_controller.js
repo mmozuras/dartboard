@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 app.get('/players', function(req, res) {
     Player.find({}, function(err, players) {
-        res.render('players/index.jade', {
+        res.render('players/index', {
           locals: { players: players }
         });
     });
