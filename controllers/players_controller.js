@@ -1,16 +1,17 @@
 var mongoose = require('mongoose'),
     Player = mongoose.model('Player');
 
-app.get('/players', function(req, res) {
-    Player.find({}, function(err, players) {
+app.get('/players', authenticate, function(req, res) {
+    Player.find({ userId: req.currentUser.id }, function(err, players) {
         res.render('players/index', {
           locals: { players: players }
         });
     });
 });
 
-app.post('/players', function(req, res) {
+app.post('/players', authenticate, function(req, res) {
     var player = new Player(req.body.player);
+    player.userId = req.currentUser.id;
     
     player.save(function(err) {
       if (err) return failed(err, req, res);
@@ -20,8 +21,8 @@ app.post('/players', function(req, res) {
     });
 });
 
-app.del('/players/:id', function(req, res) {
-    Player.findById(req.params.id, function (err, player) {
+app.del('/players/:id', authenticate, function(req, res) {
+    Player.findOne( { _id: req.params.id, userId: req.currentUser.id }, function (err, player) {
       if (err) return failed(err, req, res);
       
       player.remove();

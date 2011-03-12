@@ -830,9 +830,6 @@
   margin-right: 4%;
   border: 1px solid #dddddd;
 }
-#header {
-  height: 65px;
-}
 #content {
   margin-left: 60px;
 }
@@ -849,6 +846,9 @@
   z-index: 10;
   position: relative;
   margin: auto 10px;
+}
+#header {
+  height: 65px;
 }
 .menu {
   position: relative;

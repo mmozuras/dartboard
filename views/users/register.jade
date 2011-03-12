@@ -1,0 +1,8 @@
+h2 Register
+
+form(method='post')
+  !=partial('edit', { locals: { user: user } })
+  div
+    input(type='submit', value='Register')
+    span \ or 
+      a(href='/users/login') Log In

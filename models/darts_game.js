@@ -35,6 +35,7 @@ var DartsGame = new Schema({
     players: [DartsPlayer],
     throwNumber: { type: Number, required: true, min: 0, max: 2, default: 0 },
     currentPlayer: { type: Number, required: true, default: 0 },
+    userId: { type: ObjectId, required: true },
 });
 
 DartsGame.method('setPlayers', function(players) {

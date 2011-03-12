@@ -34,6 +34,53 @@ app.configure('production', function() {
 
 var db = mongoose.connect(app.set('db-uri'));
 autoload(db, path.join(__dirname, 'models'));
+var User = mongoose.model('User');
+
+function authenticateFromToken(req, res, next) {
+  var cookie = JSON.parse(req.cookies.authenticationtoken);
+
+  AuthenticationToken.findOne({ username: cookie.username,
+                                series: cookie.series,
+                                token: cookie.token }, (function(err, token) {
+    if (!token) {
+      res.redirect('/users/login');
+      return;
+    }
+
+    User.findOne({ username: token.username }, function(err, user) {
+      if (user) {
+        req.session.user_id = user.id;
+        req.currentUser = user;
+
+        token.token = token.randomToken();
+        token.save(function() {
+          res.cookie('authenticationtoken', token.cookieValue, { expires: new Date(Date.now() + 2 * 604800000), path: '/' });
+          next();
+        });
+      } else {
+        res.redirect('/users/login');
+      }
+    });
+  }));
+}
+
+global.authenticate = function authenticate(req, res, next) {
+  if (req.session.user_id) {
+    User.findById(req.session.user_id, function(err, user) {
+      if (user) {
+        req.currentUser = user;
+        next();
+      } else {
+        res.redirect('/users/login');
+      }
+    });
+  } else if (req.cookies.authenticationtoken) {
+    authenticateFromToken(req, res, next);
+  } else {
+    res.redirect('/users/login');
+  }
+}
+
 autoload(db, path.join(__dirname, 'controllers'));
 
 function autoload(db, folder) {

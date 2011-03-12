@@ -1,0 +1,10 @@
+h2 Log In
+p
+  a.button(href='/users/register') Register 
+form#login(method='post')
+  !=partial('edit', { locals: { user: user } })
+  div
+    label(for='remember_me') Remember me:
+    input#remember_me(type='checkbox', name='remember_me')
+  div
+    input(type='submit', value='Log In')

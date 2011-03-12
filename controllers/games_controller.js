@@ -2,42 +2,44 @@ var mongoose = require('mongoose'),
     DartsGame = mongoose.model('DartsGame'),
     Player = mongoose.model('Player');
 
-app.get('/games', function(req, res) {
-    DartsGame.find({}, function(err, games) {
+app.get('/games', authenticate, function(req, res) {
+    DartsGame.find({ userId: req.currentUser.id }, function(err, games) {
         res.render('games/index', {
           locals: { games: games}
         });
     });
 });
 
-app.get('/games/new', function(req, res) {
-    Player.find({}, function(err, players) {
+app.get('/games/new', authenticate, function(req, res) {
+    Player.find({ userId: req.currentUser.id }, function(err, players) {
       res.render('games/new', {
         locals: { players: players }
       });
     });
 });
 
-app.post('/games/new', function(req, res) {
+app.post('/games/new', authenticate, function(req, res) {
     var selectedPlayers = req.body.players;
     var dartsGame = new DartsGame();
     dartsGame.setPlayers(selectedPlayers);
+    dartsGame.userId = req.currentUser.id;
 
     dartsGame.save(function(err) {
       res.redirect('/games/' + dartsGame.id);
     });
 });
 
-app.get('/games/:id', function(req, res) {
-    DartsGame.findById(req.params.id, function(err, game) {
+app.get('/games/:id', authenticate, function(req, res) {
+    console.log(req.currentUser);
+    DartsGame.findOne({ _id: req.params.id, userId: req.currentUser.id }, function(err, game) {
       res.render('games/darts_game', {
         locals: { game: game }
       });
     });
 });
 
-app.post('/games/:id', function(req, res) {
-    DartsGame.findById(req.params.id, function(err, game) {
+app.post('/games/:id', authenticate, function(req, res) {
+    DartsGame.findOne({ _id: req.params.id, userId: req.currentUser.id }, function(err, game) {
       game.parseThrow(req.body.score);
       game.save(function(err) {
         res.send('Success');
@@ -45,16 +47,16 @@ app.post('/games/:id', function(req, res) {
     });
 });
 
-app.del('/games/:id', function(req, res) {
-    DartsGame.findById(req.params.id, function(err, game) {
+app.del('/games/:id', authenticate, function(req, res) {
+    DartsGame.findOne({ _id: req.params.id, userId: req.currentUser.id }, function(err, game) {
       game.remove();
       req.flash('info', 'Game was succesfully canceled');
       res.redirect('games');
     });
 });
 
-app.post('/games/:id/undoThrow', function(req, res) {
-    DartsGame.findById(req.params.id, function(err, game) {
+app.post('/games/:id/undoThrow', authenticate, function(req, res) {
+    DartsGame.findOne({ _id: req.params.id, userId: req.currentUser.id }, function(err, game) {
       game.undoThrow();
       game.save(function(err) {
         res.redirect('/games/' + req.params.id);
