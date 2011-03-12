@@ -19,7 +19,7 @@ html
       #login
         h3 
           a(href='#') Login
-        #tabs-1
+        #login-tab
           form(method='post')
             !=partial('edit', { locals: { user: user } })
             .submit
@@ -29,7 +29,7 @@ html
 
         h3
           a(href='#') Register
-        #tabs-2
+        #register-tab
           form(method='post', action='/users/register')
             !=partial('edit', { locals: { user: user } })
             label.field(for='confirmPassword') Confirm password:
