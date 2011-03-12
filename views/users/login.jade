@@ -2,16 +2,24 @@
 html
   head
     title= 'Dartboard'
+    script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js')
+    script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.7/jquery-ui.min.js')
     link(rel='stylesheet', href='/css/site.css')
+
+    script(type='text/javascript')
+      $(function() {
+        $(':submit, a.linkBottom').button();
+      });
+      
   body
     .centered
+      h2 Dartboard
       #login
         form(method='post')
           !{flashMessages}
           !=partial('edit', { locals: { user: user } })
           .submit
-            input#loginSubmit(type='submit', value='Log In')
+            input(type='submit', value='Log In')
             input#loginRemember(type='checkbox', name='rememberMe')
             label.inline(for='rememberMe', id='loginRemember') Remember me
-          #loginLinks
-            a.linkBottom(href='/users/register') Register 
+          a.linkBottom(href='/users/register') Register 

@@ -1,10 +1,13 @@
 @blue: #0073ea;
 @red: #ff0084;
+@darkgrey: #dddddd;
+@grey: #f6f6f6;
+@black: #000;
 
 #container {
   margin-left: 4%;
   margin-right: 4%;
-  border: 1px solid #dddddd;
+  border: 1px solid @darkgrey;
 }
 
 #content {
@@ -19,7 +22,7 @@
     font-size: 80%;
     font-variant: small-caps;
     text-decoration: none;
-    color: #000;
+    color: @black;
     outline: none;
     z-index: 10;
     position: relative;
@@ -33,7 +36,7 @@
   a {
     outline: none;
     text-align: center;
-    color: #000;
+    color: @black;
     text-transform: uppercase;
     text-decoration: none;
   }
