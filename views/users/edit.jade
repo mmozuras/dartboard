@@ -1,5 +1,5 @@
 label.field(for='username') Username:
-input.field(name='user[username]', value=user.username || '')
+input(class='field required', name='user[username]', value=user.username || '')
 
 label.field(for='password') Password:
-input.field(name='user[password]', value=user.password || '', type='password')
+input(class='field required', name='user[password]', value=user.password || '', type='password')

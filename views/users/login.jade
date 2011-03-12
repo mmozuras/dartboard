@@ -4,12 +4,23 @@ html
     title= 'Dartboard'
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js')
     script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js')
+    script(type='text/javascript', src='http://ajax.microsoft.com/ajax/jquery.validate/1.7/jquery.validate.min.js')
     link(rel='stylesheet', href='/css/site.css')
 
     script(type='text/javascript')
       $(function() {
         $(':submit, a.linkBottom').button();
         $('#login').accordion();
+        $('#login-tab > form').validate({
+          errorPlacement: function(error, element) {
+            error.css('display', 'none');
+          }
+        });
+        $('#register-tab > form').validate({
+          errorPlacement: function(error, element) {
+            error.css('display', 'none');
+          }
+        });
       });
       
   body
@@ -33,6 +44,6 @@ html
           form(method='post', action='/users/register')
             !=partial('edit', { locals: { user: user } })
             label.field(for='confirmPassword') Confirm password:
-            input.field(name='confirmPassword', type='password')
+            input(class='field required', name='confirmPassword', type='password')
             .submit
               input(type='submit', value='Register')
