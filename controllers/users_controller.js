@@ -2,23 +2,15 @@ var mongoose = require('mongoose'),
     User = mongoose.model('User'),
     AuthenticationToken = mongoose.model('AuthenticationToken');
 
-app.get('/users/register', function(req, res) {
-  res.render('users/register', {
-    layout: false,
-    locals: { user: new User() }
-  });
-});
-
 app.post('/users/register', function(req, res) {
-  var user = new User(req.body.user);
-
   function userSaveFailed() {
     req.flash('error', 'Account creation failed');
-    res.render('users/register', {
-      layout: false,
-      locals: { user: user }
-    });
+    res.redirect('/users/login');
   }
+  
+  var user = new User(req.body.user);
+
+  if (user.password != req.body.confirmPassword) return userSaveFailed();
 
   user.save(function(err) {
     if (err) return userSaveFailed();

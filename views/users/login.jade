@@ -9,17 +9,30 @@ html
     script(type='text/javascript')
       $(function() {
         $(':submit, a.linkBottom').button();
+        $('#login').accordion();
       });
       
   body
     .centered
       h2 Dartboard
+      !{flashMessages}
       #login
-        form(method='post')
-          !{flashMessages}
-          !=partial('edit', { locals: { user: user } })
-          .submit
-            input(type='submit', value='Log In')
-            input#loginRemember(type='checkbox', name='rememberMe')
-            label.inline(for='rememberMe', id='loginRemember') Remember me
-          a.linkBottom(href='/users/register') Register 
+        h3 
+          a(href='#') Login
+        #tabs-1
+          form(method='post')
+            !=partial('edit', { locals: { user: user } })
+            .submit
+              input(type='submit', value='Log In')
+              input#loginRemember(type='checkbox', name='rememberMe')
+              label.inline(for='rememberMe', id='loginRemember') Remember me
+
+        h3
+          a(href='#') Register
+        #tabs-2
+          form(method='post', action='/users/register')
+            !=partial('edit', { locals: { user: user } })
+            label.field(for='confirmPassword') Confirm password:
+            input.field(name='confirmPassword', type='password')
+            .submit
+              input(type='submit', value='Register')
