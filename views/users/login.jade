@@ -9,9 +9,9 @@ html
         form(method='post')
           !{flashMessages}
           !=partial('edit', { locals: { user: user } })
-        .submit
-          input#loginSubmit(type='submit', value='Log In')
-          input#loginRemember(type='checkbox', name='rememberMe')
-          label.inline(for='rememberMe', id='loginRemember') Remember me
-        #loginLinks
-          a.linkBottom(href='/users/register') Register 
+          .submit
+            input#loginSubmit(type='submit', value='Log In')
+            input#loginRemember(type='checkbox', name='rememberMe')
+            label.inline(for='rememberMe', id='loginRemember') Remember me
+          #loginLinks
+            a.linkBottom(href='/users/register') Register 

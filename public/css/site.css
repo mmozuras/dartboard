@@ -978,13 +978,13 @@ b {
   margin: 0;
   padding: 5px 8px;
 }
-#login form label {
+#login form label.field {
   font-size: 11px;
   color: #666;
   display: block;
   padding: 10px 0 7px 7;
 }
-#login form input {
+#login form input.field {
   border: 1px solid #ddd;
   padding: 5px;
   width: 220px;
