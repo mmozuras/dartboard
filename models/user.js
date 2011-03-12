@@ -10,10 +10,11 @@ User = new Schema({
 
 User.virtual('password')
   .set(function(password) {
+    this._password = password;
+    this.salt = this.makeSalt();
+
     if (password.length > 0)
     {
-      this._password = password;
-      this.salt = this.makeSalt();
       this.hashedPassword = this.encryptPassword(password);
     }
   })

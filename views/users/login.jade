@@ -1,10 +1,18 @@
-h2 Log In
-p
-  a.button(href='/users/register') Register 
-form#login(method='post')
-  !=partial('edit', { locals: { user: user } })
-  div
-    label(for='remember_me') Remember me:
-    input#remember_me(type='checkbox', name='remember_me')
-  div
-    input(type='submit', value='Log In')
+!!!
+html
+  head
+    title= 'DartBoard'
+    link(rel='stylesheet', href='/css/site.css')
+  body
+    .centered
+      h2 Log In
+      !{flashMessages}
+      p
+        a.button(href='/users/register') Register 
+      form#login(method='post')
+        !=partial('edit', { locals: { user: user } })
+        div
+          label(for='remember_me') Remember me:
+          input#remember_me(type='checkbox', name='remember_me')
+        div
+          input(type='submit', value='Log In')

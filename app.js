@@ -52,9 +52,9 @@ function authenticateFromToken(req, res, next) {
         req.session.user_id = user.id;
         req.currentUser = user;
 
-        token.token = token.randomToken();
+        token.token = token.random();
         token.save(function() {
-          res.cookie('authenticationtoken', token.cookieValue, { expires: new Date(Date.now() + 2 * 604800000), path: '/' });
+          res.cookie('authenticationtoken', token.cookie, { expires: new Date(Date.now() + 2 * 604800000), path: '/' });
           next();
         });
       } else {
