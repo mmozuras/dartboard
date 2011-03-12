@@ -65,5 +65,87 @@ b { font-size: 110%; }
   position: absolute;
   top: 35%;
   left: 45%;
-  .ui-state-default;
+}
+
+#login {
+  background: #fff;
+  border: 5px solid #ccc;
+  background-color: #ffffff;
+  -moz-border-radius: 5px 0 5px 5px;
+  -moz-box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 5px 0 5px 5px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 3px 3px;
+  box-shadow: 0px 3px 3px #666666;
+  border-radius: 5px 0 5px 5px;
+  
+  form {
+    margin: 0;
+    padding: 5px 8px;
+    
+    label {
+      font-size: 11px;
+      color: #666;
+      display: block;
+      padding: 10px 0 7px 7;
+    }
+
+    input {
+      border: 1px solid #ddd;
+      padding: 5px;
+      width: 220px;
+    }
+  }
+}
+
+#loginLinks {
+  margin-bottom: 5px;
+}
+
+.linkBottom {
+  color: #CC3366;
+  font-size: 11px;
+  text-decoration: none;
+}
+
+.linkBottom:hover {
+  text-decoration: underline;
+}
+
+.submit {
+  color: #666;
+  font-size: 11px;
+  margin: 12px;
+
+  #loginSubmit {
+    /* mozilla firefox */
+    -moz-border-radius: 4px 4px 4px 4px;
+    /* google chrome & safari*/
+    -webkit-border-radius: 4px;
+    /* opera */
+    border: 1px solid #3399dd;
+    color: #FFF;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 0 5px 0 0;
+    padding: 4px 10px 5px;
+    text-shadow: 0 -1px 0 #3399dd;
+  }
+
+  #loginSubmit:focus, #loginSubmit:hover {
+    cursor: pointer;
+    background-position: 0 -5px;
+  }
+
+  #loginSubmit:active {
+    background-image: none;
+  }
+
+  #loginRemember {
+    position: relative;
+    top: 3px;
+  }
+}
+
+.inline {
+  display: inline;
 }
