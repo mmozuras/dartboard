@@ -850,6 +850,13 @@
 #header {
   height: 65px;
 }
+#header a {
+  outline: none;
+  text-align: center;
+  color: #000;
+  text-transform: uppercase;
+  text-decoration: none;
+}
 #header #menu {
   float: left;
   width: 800px;
@@ -864,14 +871,8 @@
   float: left;
 }
 #header #menu ul li a {
-  text-decoration: none;
-  color: #000;
-  outline: none;
-  text-align: center;
   top: 7px;
-  text-transform: uppercase;
   z-index: 10;
-  float: left;
   height: 30px;
   position: relative;
   margin: auto 10px;
@@ -883,8 +884,16 @@
   z-index: 8;
   position: absolute;
 }
-#header #user {
+#header #user a {
   float: right;
+  padding: 25px 10px 0;
+  top: 7px;
+  z-index: 10;
+  height: 23px;
+}
+#header #user a:hover {
+  border-bottom: 5px solid #ff0084;
+  z-index: 8;
 }
 ul {
   list-style-type: none;
