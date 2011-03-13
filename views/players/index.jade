@@ -6,11 +6,10 @@ ul
         span.ui-state-default
           =player.name
         input(type='hidden', name='_method', value='delete')
-        button(type='submit')
-          span(class='ui-icon ui-icon-closethick')
+        button.delete(type='submit')
 
   form(method='post')
     div
-      input(name='player[name]')
+      input(type='text', name='player[name]')
     div
       input(type='submit', value='Add')

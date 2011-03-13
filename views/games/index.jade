@@ -8,5 +8,4 @@ ul
            =_.map(game.players, function(player) { return player.name + ': ' + player.score }).join(', ')
         - if (!game.isOver())
           input(type='hidden', name='_method', value='delete')
-          button(type='submit')
-            span(class='ui-icon ui-icon-closethick')
+          button.delete(type='submit')

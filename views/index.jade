@@ -1,0 +1,16 @@
+div.ui-widget-content(style='border: none')
+  h3 Welcome to Dartboard, a web app written to help track your darts games scores!
+  p Only one user is needed for one darts playing group, so don't worry - every player in your group doesn't have to register to this site. 
+  p What are you waiting for?
+
+  - if (count == 0)
+    :text
+      You need players to play darts, so go
+    a(href='/players') create some
+    :text
+      .
+  - else
+    a(href='/games/new') Start a game 
+    :text
+      or
+    a(href='/games') finish an in-progress one!

@@ -1624,6 +1624,13 @@ h2 {
 #currentPlayer span {
   padding: 0 10px;
 }
+.ui-button {
+  font-size: .7em;
+}
+button.delete {
+  width: 16px;
+  height: 18px;
+}
 .centered {
   position: absolute;
   top: 20%;

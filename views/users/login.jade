@@ -9,8 +9,13 @@ html
 
     script(type='text/javascript')
       $(function() {
-        $(':submit, a.linkBottom').button();
-        $('#login').accordion();
+        $(':submit').button();
+        $('#login').accordion({
+          change: function(event, ui) {
+            $('.ui-accordion-content-active > form :input:visible:first').focus();
+          }
+        });
+        $('.ui-accordion-content-active > form :input:visible:first').focus();
         $('#login-tab > form').validate({
           errorPlacement: function(error, element) {
             error.css('display', 'none');

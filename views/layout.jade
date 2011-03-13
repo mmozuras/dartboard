@@ -16,6 +16,14 @@ html
           fx: 'backout',
           speed: 700,
         });
+        $(':submit, button').button();
+        $('button.delete').button({
+          text: false,
+          icons: {
+            primary: 'ui-icon-closethick',
+          },
+        });
+        $(':text:visible:first').focus()
       });
   body
     #container
