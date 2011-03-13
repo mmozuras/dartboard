@@ -12,10 +12,14 @@ html
 
     script(type='text/javascript')
       $(function() {
+        var path = window.location.pathname.replace('/https?:\/\/[^\/]+/i', '');
+        $('a[href="' + path + '"]').parent().addClass('current');
+
         $('#menu > ul').lavaLamp({
           fx: 'backout',
           speed: 700,
         });
+        
         $(':submit, button').button();
         $('button.delete').button({
           text: false,
