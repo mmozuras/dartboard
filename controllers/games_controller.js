@@ -20,7 +20,7 @@ app.get('/games/new', authenticate, function(req, res) {
 
 app.post('/games/new', authenticate, function(req, res) {
     var selectedPlayers = req.body.players;
-    var dartsGame = new DartsGame();
+    var dartsGame = new DartsGame({ startingScore: req.body.startingScore, out: req.body.out });
     dartsGame.setPlayers(selectedPlayers);
     dartsGame.userId = req.currentUser.id;
 
@@ -30,7 +30,6 @@ app.post('/games/new', authenticate, function(req, res) {
 });
 
 app.get('/games/:id', authenticate, function(req, res) {
-    console.log(req.currentUser);
     DartsGame.findOne({ _id: req.params.id, userId: req.currentUser.id }, function(err, game) {
       res.render('games/darts_game', {
         locals: { game: game }

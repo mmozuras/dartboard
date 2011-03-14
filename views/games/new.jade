@@ -11,20 +11,42 @@ script(type='text/javascript')
       });
     };
 
-    movableWithDblClick('ul#players > li', 'ul#selected-players');
-    movableWithDblClick('ul#selected-players > li', 'ul#players');
+    movableWithDblClick('ul#players > li:not(.ui-state-disabled)', 'ul#selected-players');
+    movableWithDblClick('ul#selected-players > li:not(.ui-state-disabled)', 'ul#players');
   });
 
-ul#players(class='ui-sortable')
-  li.ui-state-disabled Players
-  - for (var i in players)
-    li
-      input(type='hidden', name='players[' + i + '][id]', value=players[i].id) 
-      input(type='hidden', name='players[' + i + '][name]', value=players[i].name)
-      span.ui-state-default
-        =players[i].name
-
 form(method='post')
-  ul#selected-players(class='ui-sortable')
-    li.ui-state-disabled Selected players
-  input(type='submit', value='Start')
+  table
+    tr
+      td(height='30') Players
+      td(height='30')
+        ul#players(class='ui-sortable')
+          - for (var i in players)
+            li
+              input(type='hidden', name='players[' + i + '][id]', value=players[i].id) 
+              input(type='hidden', name='players[' + i + '][name]', value=players[i].name)
+              span.ui-state-default
+                =players[i].name
+
+    tr
+      td(height='30') Selected Players
+      td(height='30')
+        ul#selected-players(class='ui-sortable')
+
+    tr
+      td(height='30') Score
+      td
+        select.combobox(name='startingScore')
+          option(value='301') 301
+          option(value='501') 501
+          option(value='701') 701
+          option(value='1001') 1001
+    tr
+      td(height='30') Out
+      td
+        select.combobox(name='out')
+          option(value='1') Single
+          option(value='2') Double
+    tr
+      td
+        input(type='submit', value='Start')
