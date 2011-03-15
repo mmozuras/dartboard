@@ -19,8 +19,11 @@ app.get('/games/new', authenticate, function(req, res) {
 });
 
 app.post('/games/new', authenticate, function(req, res) {
-    console.log(req.body);
     var selectedPlayers = req.body.players;
+    if (!_.any(selectedPlayers)) {
+      req.flash('error', 'Select at least one player (by double-clicking or dragging)');
+      return res.redirect('/games/new');
+    }
     var dartsGame = new DartsGame({ startingScore: req.body.startingScore, out: req.body.out });
     dartsGame.setPlayers(selectedPlayers);
     dartsGame.userId = req.currentUser.id;
