@@ -19,6 +19,7 @@ app.get('/games/new', authenticate, function(req, res) {
 });
 
 app.post('/games/new', authenticate, function(req, res) {
+    console.log(req.body);
     var selectedPlayers = req.body.players;
     var dartsGame = new DartsGame({ startingScore: req.body.startingScore, out: req.body.out });
     dartsGame.setPlayers(selectedPlayers);

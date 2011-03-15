@@ -14,26 +14,37 @@ script(type='text/javascript')
 !=partial('board')
 
 #scores
-  #currentPlayer
-    - var player = game.players[game.currentPlayer]
+  - if (game.isOver())
+    #currentPlayer
+      span Game Winner:
       span.name
-        =player.name
-      span.score
-        =game.players[game.currentPlayer].score
-      div
-      - for (var i = player.throws.length; i > player.throws.length - game.throwNumber; i--)
-        span.throw
-          - var t = player.throws[i - 1]
-            =t.score * t.modifier
+        =game.winner().name;
+  - else
+    #currentPlayer
+      - var player = game.players[game.currentPlayer]
+        span.name
+          =player.name
+        span.score
+          =game.players[game.currentPlayer].score
+        div
+        - for (var i = player.throws.length; i > player.throws.length - game.throwNumber; i--)
+          span.throw
+            - var t = player.throws[i - 1]
+              =t.score * t.modifier
 
   input.lastThrower(type='hidden', value=game.lastThrower().name)
   ul
     - for (var i = 0; i < game.players.length; i++)
-      - if (i != game.currentPlayer)
-        - var player = game.players[i]
+      - var player = game.players[i]
+        - if (game.isOver())
+          li(class=player.name)
+            span.ui-state-default
+              =player.name + " : " + player.score
+        - else if (i != game.currentPlayer)
           li(class=player.name)
             span.ui-state-default
               =player.name + " : " + player.score
 
-  form(method='post', action='/games/' + game.id + '/undoThrow')
-    input(type='submit', value='Undo Throw')
+  - if (!game.isOver() && game.isStarted())
+    form(method='post', action='/games/' + game.id + '/undoThrow')
+      input(type='submit', value='Undo Throw')

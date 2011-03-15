@@ -15,21 +15,22 @@ script(type='text/javascript')
     movableWithDblClick('ul#selected-players > li:not(.ui-state-disabled)', 'ul#players');
   });
 
+table
+  tr
+    td(height='30') Players
+    td(height='30')
+      ul#players(class='ui-sortable')
+        - for (var i in players)
+          li
+            input(type='hidden', name='players[' + i + '][id]', value=players[i].id) 
+            input(type='hidden', name='players[' + i + '][name]', value=players[i].name)
+            span.ui-state-default
+              =players[i].name
+
 form(method='post')
   table
     tr
-      td(height='30') Players
-      td(height='30')
-        ul#players(class='ui-sortable')
-          - for (var i in players)
-            li
-              input(type='hidden', name='players[' + i + '][id]', value=players[i].id) 
-              input(type='hidden', name='players[' + i + '][name]', value=players[i].name)
-              span.ui-state-default
-                =players[i].name
-
-    tr
-      td(height='30') Selected Players
+      td(height='30') Selected
       td(height='30')
         ul#selected-players(class='ui-sortable')
 

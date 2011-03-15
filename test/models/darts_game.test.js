@@ -294,4 +294,21 @@ module.exports = {
 
     game.isStarted().should.be.false;
   },
+
+  'should have no game winner if the game is not over yet': function() {
+    var game = GameWithOnePlayer();
+
+    assert.isUndefined(game.winner());
+  },
+
+  'should be able to determine the game winner': function() {
+    var game = GameWithTwoPlayers();
+
+    for (var i = 0; i < 40; i++)
+      game.throw(15, 3);
+
+    game.throw(3, 2);
+
+    game.winner().name.should.eql('Steve');
+  },
 }

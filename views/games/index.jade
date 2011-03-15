@@ -9,3 +9,8 @@ ul
         - if (!game.isOver())
           input(type='hidden', name='_method', value='delete')
           button.delete(type='submit')
+        - else
+          b
+            =' Winner: '
+          span.ui-state-default
+            =game.winner().name

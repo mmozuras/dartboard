@@ -102,6 +102,12 @@ DartsGame.method('isOver', function() {
     });
 });
 
+DartsGame.method('winner', function() {
+    return _.detect(this.players, function(player) {
+      return player.score == 0;
+    });
+});
+
 DartsGame.method('isStarted', function() {
     return _.any(this.players, function(player) {
       return !_.isEmpty(player.throws);
