@@ -1,8 +1,8 @@
-##About
+#About
 
 A simple Darts scoring web app written with Node.js. Written for two simple reasons:
-1. I was itching to write something with Node.js.
-2. We have Darts at the office and there's no decent free Darts scoring app I could find ;)
+* I was itching to write something with Node.js.
+* We have Darts at the office and there's no decent free Darts scoring app I could find ;)
 
 ##Dependencies
 
