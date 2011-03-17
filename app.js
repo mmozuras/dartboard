@@ -13,7 +13,7 @@ app.configure(function() {
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.session({ secret: 'supersecret' }));
-  app.use(express.logger({ format: '\x1b[1m:method\x1b[0m \x1b[33m:url\x1b[0m \x1b[1m:status\x1b[0m :response-time ms' }))
+  app.use(express.logger({ format: '\x1b[1m:method\x1b[0m \x1b[33m:url\x1b[0m \x1b[1m:status\x1b[0m :response-time ms' }));
   app.use(express.methodOverride());
   app.use(express.compiler({ src: __dirname + '/public', enable: ['less'] }));
   app.use(app.router);
@@ -79,21 +79,21 @@ global.authenticate = function authenticate(req, res, next) {
   } else {
     res.redirect('/users/login');
   }
-}
+};
 
 autoload(db, path.join(__dirname, 'controllers'));
 
 function autoload(db, folder) {
   var files = fs.readdirSync(folder).filter(function(file) { 
-    return path.extname(file) == '.js' 
+    return path.extname(file) == '.js';
   });
 
   var names = _.map(files, function(file) {
-      return path.basename(file) 
+      return path.basename(file);
   });
 
   _.each(names, function(name) {
-    require(folder + '/' + name)
+    require(folder + '/' + name);
   });
 }
 

@@ -9,5 +9,5 @@ module.exports = {
   'should not store a plaintext password': function() {
     var user = new User({username: 'Mark', password: 'password'});
     user.hashedPassword.should.not.eql('password');
-  },
-}
+  }
+};
